@@ -1,0 +1,68 @@
+#ifndef Geometry_CTPPSTrackerDetTopology_RPix_DET_TOPOLOGY_H
+#define Geometry_CTPPSTrackerDetTopology_RPix_DET_TOPOLOGY_H
+
+#include "TMath.h"
+#include "DataFormats/GeometryVector/interface/LocalVector.h"
+#include "DataFormats/Common/interface/Ref.h"
+#include "SimDataFormats/GeneratorProducts/interface/HepMCProduct.h"
+
+using namespace std; 
+namespace HepMC {
+	class ThreeVector;
+}
+
+/**
+ *\brief Geometrical and topological information on RPix silicon detector.
+ * Uses coordinate a frame with origin in the center of the wafer.
+ **/
+class RPixTopology
+{
+  public:
+    RPixTopology();
+/*    inline const HepMC::ThreeVector& GetStripReadoutAxisDir() const {return strip_readout_direction_;}
+    inline const HepMC::ThreeVector& GetStripDirection() const {return strip_direction_;}
+    inline const HepMC::ThreeVector& GetNormalDirection() const {return normal_direction_;}
+*/
+
+    /// method converts strip number to a hit position [mm] in det readout coordinate 
+    /// in the origin in the middle of the si detector
+	/// strip_no is assumed in the range 0 ... no_of_strips_ - 1
+//    inline double GetHitPositionInReadoutDirection(double strip_no) const
+//    {return last_strip_to_border_dist_ + (no_of_strips_-1)*pitch_ - y_width_/2. - strip_no * pitch_;}
+
+    inline double DetXWidth() const {return simX_width_;}
+    inline double DetYWidth() const {return simY_width_;}
+//   inline double DetEdgeLength() const {return phys_edge_lenght_;}
+    inline double DetDeadEdgeWidth() const {return dead_edge_width_;}
+    inline double DetThickness() const {return thickness_;}
+    inline double DetPitchSimX() const {return pitch_simX_;}
+    inline double DetPitchSimY() const {return pitch_simY_;}
+    inline unsigned short DetPixelSimXNo() const {return no_of_pixels_simX_;}
+    inline unsigned short DetPixelSimYNo() const {return no_of_pixels_simY_;}
+    inline unsigned short DetPixelNo() const {return no_of_pixels_;}
+
+	/// returns true if hit at coordinates u, v (in mm) falls into the sensitive area
+	/// can take into account insensitive margin (in mm) at the beam-facing edge
+//	static bool IsHit(double u, double v, double insensitiveMargin = 0);
+      
+  public:
+
+    static double pitch_simY_;
+    static double pitch_simX_;
+    static double thickness_;
+    static unsigned short no_of_pixels_simX_;  
+    static unsigned short no_of_pixels_simY_;  
+    static unsigned short no_of_pixels_;  
+    static double simX_width_;
+    static double simY_width_;
+    static double dead_edge_width_;
+//    static double last_strip_to_border_dist_;
+//    static double last_strip_to_center_dist_;
+/*
+    const HepMC::ThreeVector strip_readout_direction_;
+    const HepMC::ThreeVector strip_direction_;
+    const HepMC::ThreeVector normal_direction_;
+*/
+};
+
+#endif 
