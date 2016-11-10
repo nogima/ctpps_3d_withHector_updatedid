@@ -10,6 +10,7 @@
 #include "DetectorDescription/Core/interface/DDFilteredView.h"
 #include "DetectorDescription/Core/interface/DDCompactView.h"
 #include "DataFormats/CTPPSDetId/interface/TotemRPDetId.h"
+#include "DataFormats/CTPPSDetId/interface/CTPPSTrackerDetId.h"
 
 // this might be useful one day
 //.#include "Geometry/TrackerNumberingBuilder/interface/ExtractStringFromDDD.h"
@@ -47,6 +48,8 @@ const DetGeomDesc* DDDTotemRPContruction::construct(const DDCompactView* cpv)
 
 void DDDTotemRPContruction::buildDetGeomDesc(DDFilteredView *fv, DetGeomDesc *gd)
 {
+
+//  std::cout << " in buildDetGeomDesc " << std::endl;
   // try to dive into next level
   if (! fv->firstChild())
     return;
@@ -59,7 +62,16 @@ void DDDTotemRPContruction::buildDetGeomDesc(DDFilteredView *fv, DetGeomDesc *gd
     // add ID (only for detectors/sensors)
     if (fv->logicalPart().name().name().compare(DDD_TOTEM_RP_DETECTOR_NAME) == 0)
     {
+      std::cout << " found "<<DDD_TOTEM_RP_DETECTOR_NAME << std::endl;
+
+
       const vector<int> &cN = fv->copyNumbers();
+
+     for(unsigned int ll = 0; ll <cN.size(); ll++){
+	std::cout << "cN["<<ll<<"] = "<< cN[ll] << std::endl;
+      }
+
+
       // check size of copy numubers array
       if (cN.size() < 3)
         throw cms::Exception("DDDTotemRPContruction") << "size of copyNumbers for RP_Silicon_Detector is "
@@ -72,6 +84,37 @@ void DDDTotemRPContruction::buildDetGeomDesc(DDFilteredView *fv, DetGeomDesc *gd
       const unsigned int rp = A % 10;
       const unsigned int detector = cN[cN.size() - 1];
       newGD->setGeographicalID(TotemRPDetId(arm, station, rp, detector));
+
+      std::cout << arm << " "  << station << " "  << rp << " "  << detector << " "  << cN.size() << " " << A << std::endl; 
+
+ 
+
+    }
+
+// for 3d pixels
+    if (fv->logicalPart().name().name().compare("RPixWafer") == 0)
+    {
+  std::cout << " found pixel wafer " << std::endl;
+     const vector<int> &cN = fv->copyNumbers();
+      // check size of copy numubers array
+     std::cout << "cN.size() " << cN.size()  << std::endl; 
+     for(unsigned int ll = 0; ll <cN.size(); ll++){
+	std::cout << "for pixels cN["<<ll<<"] = "<< cN[ll] << std::endl;
+      }
+
+     if (cN.size() < 4)
+        throw cms::Exception("DDDTotemRPContruction") << "size of copyNumbers for Wafer is "
+          << cN.size() << ". It must be >= 4." << endl;
+
+      // extract information
+      const unsigned int A = cN[cN.size() - 4];
+      const unsigned int arm = A / 100;
+      const unsigned int station = (A % 100) / 10;
+      const unsigned int rp = A % 10;
+      const unsigned int detector = cN[cN.size() - 2]-1;
+      newGD->setGeographicalID(CTPPSTrackerDetId(arm, station, rp, detector));
+      std::cout << "NewGD " << arm << " "  << station << " "  << rp << " "  << detector << " "  << cN.size() << " " << A << std::endl; 
+
     }
 
     if (fv->logicalPart().name().name().compare(DDD_TOTEM_RP_PRIMARY_VACUUM_NAME) == 0)

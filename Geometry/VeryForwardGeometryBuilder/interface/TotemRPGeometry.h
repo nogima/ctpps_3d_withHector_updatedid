@@ -9,6 +9,7 @@
 #define Geometry_VeryForwardGeometryBuilder_TotemRPGeometry
 
 #include "DataFormats/CTPPSDetId/interface/TotemRPDetId.h"
+#include "DataFormats/CTPPSDetId/interface/CTPPSTrackerDetId.h"
 #include "CLHEP/Vector/ThreeVector.h"
 #include "CLHEP/Vector/Rotation.h"
 #include "Geometry/VeryForwardGeometryBuilder/interface/DetGeomDesc.h"
@@ -42,7 +43,7 @@ class TotemRPGeometry
     typedef std::map<int, DetGeomDesc* > RPDeviceMapType;
     typedef std::map<unsigned int, std::set<unsigned int> > mapSetType;
 
-    TotemRPGeometry() {}
+    TotemRPGeometry() {std::cout << " TOTEM RP GEOMETRY " << std::endl;}
     ~TotemRPGeometry() {}
 
     /// build up from DetGeomDesc

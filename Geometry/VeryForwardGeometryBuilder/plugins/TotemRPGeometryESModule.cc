@@ -94,6 +94,9 @@ TotemRPGeometryESModule::TotemRPGeometryESModule(const edm::ParameterSet &p)
 
   setWhatProduced(this, &TotemRPGeometryESModule::produceMisalignedGD);
   setWhatProduced(this, &TotemRPGeometryESModule::produceMisalignedTG);
+
+
+  std::cout << "     MERDA    in  TotemRPGeometryESModule" << std::endl;
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -121,7 +124,7 @@ void TotemRPGeometryESModule::ApplyAlignments(const ESHandle<DetGeomDesc> &ideal
     bufferNew.pop_front();
 
     // Is it sensor? If yes, apply full sensor alignments
-    if (! pD->name().name().compare(DDD_TOTEM_RP_DETECTOR_NAME))
+    if ((! pD->name().name().compare(DDD_TOTEM_RP_DETECTOR_NAME))  || (! pD->name().name().compare("RPixWafer")))
     {
       unsigned int plId = pD->geographicalID();
 
@@ -334,6 +337,9 @@ class MeasuredGeometryProducer {
         }
 
         void positionEverythingButDetectors(void) {
+
+
+	  std::cout << " Inside positionEverythingButDetectors !!!!" << std::endl; 
             DDCompactView::graph_type::const_iterator it = idealCV.graph().begin_iter();
             DDCompactView::graph_type::const_iterator itEnd = idealCV.graph().end_iter();
             for (; it != itEnd; ++it) {
@@ -424,8 +430,10 @@ std::unique_ptr<DDCompactView> TotemRPGeometryESModule::produceMeasuredDDCV(cons
 {
   // get the ideal DDCompactView from EventSetup
   edm::ESHandle<DDCompactView> idealCV;
-  iRecord.getRecord<IdealGeometryRecord>().get("XMLIdealGeometryESSource_CTPPS", idealCV);
-
+  std::cout << " PRIMA " << std::endl;
+//
+  iRecord.getRecord<IdealGeometryRecord>().get(idealCV);
+ std::cout << " DOPO " << std::endl;
   // load alignments
   edm::ESHandle<RPAlignmentCorrectionsData> alignments;
   try {
@@ -436,15 +444,15 @@ std::unique_ptr<DDCompactView> TotemRPGeometryESModule::produceMeasuredDDCV(cons
   {
     if (verbosity)
     {
-      LogVerbatim("TotemRPGeometryESModule::produceMeasuredDDCV")
+      std::cout <<"TotemRPGeometryESModule::produceMeasuredDDCV"
         << ">> TotemRPGeometryESModule::produceMeasuredDDCV > Measured geometry: "
         << alignments->GetRPMap().size() << " RP and "
-        << alignments->GetSensorMap().size() << " sensor alignments applied.";
+        << alignments->GetSensorMap().size() << " sensor alignments applied."<<std::endl;
     }
   } else {
     if (verbosity)
-      LogVerbatim("TotemRPGeometryESModule::produceMeasuredDDCV")
-        << ">> TotemRPGeometryESModule::produceMeasuredDDCV > Measured geometry: No alignments applied.";
+      std::cout <<"TotemRPGeometryESModule::produceMeasuredDDCV"
+        << ">> TotemRPGeometryESModule::produceMeasuredDDCV > Measured geometry: No alignments applied."<<std::endl;
   }
 
   DDCompactView *measuredCV = NULL;
@@ -481,14 +489,14 @@ std::unique_ptr<DetGeomDesc> TotemRPGeometryESModule::produceRealGD(const VeryFo
   if (alignments.isValid())
   {
     if (verbosity)
-      LogVerbatim("TotemRPGeometryESModule::produceRealGD")
+      std::cout <<"TotemRPGeometryESModule::produceRealGD"
         << ">> TotemRPGeometryESModule::produceRealGD > Measured geometry: "
         << alignments->GetRPMap().size() << " RP and "
-        << alignments->GetSensorMap().size() << " sensor alignments applied.";
+        << alignments->GetSensorMap().size() << " sensor alignments applied."<<std::endl;
   } else {
     if (verbosity)
-      LogVerbatim("TotemRPGeometryESModule::produceRealGD")
-        << ">> TotemRPGeometryESModule::produceRealGD > Real geometry: No alignments applied.";
+      std::cout <<"TotemRPGeometryESModule::produceRealGD"
+        << ">> TotemRPGeometryESModule::produceRealGD > Real geometry: No alignments applied."<<std::endl;
   }
 
   DetGeomDesc* newGD = NULL;
@@ -512,14 +520,14 @@ std::unique_ptr<DetGeomDesc> TotemRPGeometryESModule::produceMisalignedGD(const 
   if (alignments.isValid())
   {
     if (verbosity)
-      LogVerbatim("TotemRPGeometryESModule::produceMisalignedGD")
+      std::cout <<"TotemRPGeometryESModule::produceMisalignedGD"
         << ">> TotemRPGeometryESModule::produceMisalignedGD > Measured geometry: "
         << alignments->GetRPMap().size() << " RP and "
-        << alignments->GetSensorMap().size() << " sensor alignments applied.";
+        << alignments->GetSensorMap().size() << " sensor alignments applied."<<std::endl;
   } else {
     if (verbosity)
-      LogVerbatim("TotemRPGeometryESModule::produceMisalignedGD")
-        << ">> TotemRPGeometryESModule::produceMisalignedGD > Misaligned geometry: No alignments applied.";
+      std::cout <<"TotemRPGeometryESModule::produceMisalignedGD"
+        << ">> TotemRPGeometryESModule::produceMisalignedGD > Misaligned geometry: No alignments applied."<<std::endl;
   }
 
   DetGeomDesc* newGD = NULL;
