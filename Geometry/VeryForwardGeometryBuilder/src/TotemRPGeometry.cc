@@ -162,33 +162,16 @@ void TotemRPGeometry::BuildSets()
 // build
   for (mapType::const_iterator it = theMap.begin(); it != theMap.end(); ++it)
     {
-
-      const CTPPSDetId ctpps_id(it->first);
-    
-      if(ctpps_id.subdetId()==3){
-
-	cout << " in building RP Id" << endl;
-	const TotemRPDetId detId(it->first);
-	const TotemRPDetId rpId = detId.getRPId();
-	const TotemRPDetId stId = detId.getStationId();
-	const TotemRPDetId armId = detId.getArmId();
-	stationsInArm[armId].insert(armId);
-	rpsInStation[stId].insert(rpId);
-	detsInRP[rpId].insert(detId);
-      }
-      else if(ctpps_id.subdetId()==4){
-	cout << " in building pixelId" << endl;
-	const CTPPSTrackerDetId detId(it->first);
-	const CTPPSTrackerDetId rpId = detId.getRPId();
-	const CTPPSTrackerDetId stId = detId.getStationId();
-	const CTPPSTrackerDetId armId = detId.getArmId();
-	stationsInArm[armId].insert(armId);
-	rpsInStation[stId].insert(rpId);
-	detsInRP[rpId].insert(detId);
-      }
-
-
+      const CTPPSDetId detId(it->first);
+      const CTPPSDetId rpId = detId.getRPId();
+      const CTPPSDetId stId = detId.getStationId();
+      const CTPPSDetId armId = detId.getArmId();
+      stationsInArm[armId].insert(armId);
+      rpsInStation[stId].insert(rpId);
+      detsInRP[rpId].insert(detId);
     }
+
+
 }
 
 //----------------------------------------------------------------------------------------------------
