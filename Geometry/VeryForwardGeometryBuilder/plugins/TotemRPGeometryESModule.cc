@@ -96,7 +96,7 @@ TotemRPGeometryESModule::TotemRPGeometryESModule(const edm::ParameterSet &p)
   setWhatProduced(this, &TotemRPGeometryESModule::produceMisalignedTG);
 
 
-  std::cout << "     MERDA    in  TotemRPGeometryESModule" << std::endl;
+  std::cout << " Inside  TotemRPGeometryESModule" << std::endl;
 }
 
 //----------------------------------------------------------------------------------------------------
@@ -339,7 +339,7 @@ class MeasuredGeometryProducer {
         void positionEverythingButDetectors(void) {
 
 
-	  std::cout << " Inside positionEverythingButDetectors !!!!" << std::endl; 
+	  std::cout << " Inside positionEverythingButDetectors" << std::endl; 
             DDCompactView::graph_type::const_iterator it = idealCV.graph().begin_iter();
             DDCompactView::graph_type::const_iterator itEnd = idealCV.graph().end_iter();
             for (; it != itEnd; ++it) {
@@ -430,10 +430,8 @@ std::unique_ptr<DDCompactView> TotemRPGeometryESModule::produceMeasuredDDCV(cons
 {
   // get the ideal DDCompactView from EventSetup
   edm::ESHandle<DDCompactView> idealCV;
-  std::cout << " PRIMA " << std::endl;
-//
+
   iRecord.getRecord<IdealGeometryRecord>().get(idealCV);
- std::cout << " DOPO " << std::endl;
   // load alignments
   edm::ESHandle<RPAlignmentCorrectionsData> alignments;
   try {

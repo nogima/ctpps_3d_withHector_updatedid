@@ -39,10 +39,10 @@ char TotemRPGeometry::Build(const DetGeomDesc *gD)
       for (unsigned int i = 0; i < d->components().size(); i++)
 	buffer.push_back(d->components()[i]);
     }
-  cout << " before BuildSets" << endl;
+
 // build sets from theMap
   BuildSets();
-  cout << "out of Build" << endl;
+
   return 0;
 }
 
