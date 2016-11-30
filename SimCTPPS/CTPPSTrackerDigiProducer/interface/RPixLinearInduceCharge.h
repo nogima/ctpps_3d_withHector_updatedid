@@ -1,12 +1,13 @@
-#ifndef SimCTPPS_RPixDigiProducer_RPix_LINEAR_INDUCE_CHARGE_H
-#define SimCTPPS_RPixDigiProducer_RPix_LINEAR_INDUCE_CHARGE_H
+#ifndef SimPPS_RPixDigiProducer_RPix_LINEAR_INDUCE_CHARGE_H
+#define SimPPS_RPixDigiProducer_RPix_LINEAR_INDUCE_CHARGE_H
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include <vector>
-//#include "SimCTPPS/CTPPSTrackerDigiProducer/interface/RPixSimTypes.h"
+//#include "SimPPS/PPSTrackerDigiProducer/interface/RPixSimTypes.h"
 #include "Geometry/CTPPSDetTopology/interface/RPixSimTopology.h"
 #include "SimCTPPS/CTPPSTrackerDigiProducer/interface/RPixSignalPoint.h"
-
+class TFile;
+class TH2D;
 class RPixLinearInduceCharge
 {
   public:
@@ -21,7 +22,9 @@ std::map<unsigned short, double, std::less<unsigned short> > Induce(const std::v
     double sqrt_2;
     int no_of_pixels_;
     int verbosity_;
-
+    string ChargeMapFile_;
+    TFile * fChargeMap;
+    TH2D * hChargeMap;
     //double sigmas_no_;
     //double active_edge_smearing_;
     //double bottom_edge_smearing_;

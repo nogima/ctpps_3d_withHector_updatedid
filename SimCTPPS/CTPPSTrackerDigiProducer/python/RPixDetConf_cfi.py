@@ -10,7 +10,7 @@ RPixDetDigitizer = cms.EDProducer("CTPPSTrackerDigiProducer",
 
     # RPDetDigitizer
   RPixEquivalentNoiseCharge = cms.double(1000.0),
- RPixNoNoise = cms.bool(False),
+  RPixNoNoise = cms.bool(False),
 
     # RPDisplacementGenerator
   #  RPDisplacementOn = cms.bool(False),
@@ -26,14 +26,17 @@ RPixDetDigitizer = cms.EDProducer("CTPPSTrackerDigiProducer",
    RPixChargeDivisions = cms.int32(20),
    RPixDeltaProductionCut = cms.double(0.120425),    # [MeV]
 
-    # RPLinearInduceChargeOnStrips
-    RPixCoupling = cms.double(1.0), # fraction of charge going to the strip, the missing part is taken by its neighbours
+    # RPixLinearInduceCharge
+#    ChargeMapFile = cms.string("/afs/cern.ch/user/n/nogima/CMSSW_7_5_0/src/CNM_CT_PPS_10_4_ChargeMap_Angle_0_norm.root"),
+    ChargeMapFile = cms.string("CNM_CT_PPS_10_4_ChargeMap_Angle_0_norm.root"),
+    RPixCoupling = cms.double(0.135), # fraction of the remaining charge going to the closer neighbour pixel. Value = 0.135, Value = 0.0 bypass the charge map and the charge sharing approach 
 
     # RPixDummyROCSimulator
   
-  RPixDummyROCThreshold = cms.double(2500.0),
-  RPixDummyROCElectronPerADC = cms.double(210.0),   # to be verified 
-  RPixDeadPixelProbability = cms.double(0.001),
+#  RPixDummyROCThreshold = cms.double(2500.0),
+   RPixDummyROCThreshold = cms.double(1900.0),
+   RPixDummyROCElectronPerADC = cms.double(210.0),   # 210.0 to be verified 
+   RPixDeadPixelProbability = cms.double(0.001),
    RPixDeadPixelSimulationOn = cms.bool(False),
 
     # RPixSimTopology
@@ -45,5 +48,3 @@ RPixDetDigitizer = cms.EDProducer("CTPPSTrackerDigiProducer",
  #   RPTopEdgePosition = cms.double(1.5),
   #  RPBottomEdgePosition = cms.double(1.5)
 )
-
-
