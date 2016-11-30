@@ -1,5 +1,5 @@
-#ifndef Geometry_CTPPSTrackerDetTopology_RPix_DET_SIM_TOPOLOGY_H
-#define Geometry_CTPPSTrackerDetTopology_RPix_DET_SIM_TOPOLOGY_H
+#ifndef Geometry_CTPPSPixelDetTopology_RPix_DET_SIM_TOPOLOGY_H
+#define Geometry_CTPPSPixelDetTopology_RPix_DET_SIM_TOPOLOGY_H
 
 #include "TMath.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
@@ -323,4 +323,4 @@ x = x + simX_width_/2.;
 
 };
 
-#endif  //Geometry_CTPPSTrackerDetTopology_RPix_DET_SIM_TOPOLOGY_H
+#endif  //Geometry_CTPPSPixelDetTopology_RPix_DET_SIM_TOPOLOGY_H

@@ -1,5 +1,5 @@
-#ifndef Geometry_CTPPSTrackerDetTopology_RPix_DET_TOPOLOGY_H
-#define Geometry_CTPPSTrackerDetTopology_RPix_DET_TOPOLOGY_H
+#ifndef Geometry_CTPPSPixelDetTopology_RPix_DET_TOPOLOGY_H
+#define Geometry_CTPPSPixelDetTopology_RPix_DET_TOPOLOGY_H
 
 #include "TMath.h"
 #include "DataFormats/GeometryVector/interface/LocalVector.h"

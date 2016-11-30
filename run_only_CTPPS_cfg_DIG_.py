@@ -97,7 +97,7 @@ process.common_maximum_timex = cms.PSet( # need to be localy redefined
         )
 
 process.load("SimGeneral.MixingModule.MYmixNoPU_cfi")
-process.load("SimCTPPS.CTPPSTrackerDigiProducer.RPixDetConf_cfi")
+process.load("SimCTPPS.CTPPSPixelDigiProducer.RPixDetConf_cfi")
 
 
 process.generation_step = cms.Path(process.pgen)

@@ -1,10 +1,10 @@
 #ifndef CTPPS_TRACKERDIGI_CLASSES_H
 #define CTPPS_TRACKERDIGI_CLASSES_H
 
-#include "DataFormats/CTPPSDigi/interface/CTPPSTrackerDigi.h"
-#include "DataFormats/CTPPSDigi/interface/CTPPSTrackerDigiCollection.h"
-//#include "DataFormats/CTPPSTrackerDigi/interface/SiPixelCalibDigi.h"
-//#include "DataFormats/CTPPSTrackerDigi/interface/SiPixelCalibDigiError.h"
+#include "DataFormats/CTPPSDigi/interface/CTPPSPixelDigi.h"
+#include "DataFormats/CTPPSDigi/interface/CTPPSPixelDigiCollection.h"
+//#include "DataFormats/CTPPSPixelDigi/interface/SiPixelCalibDigi.h"
+//#include "DataFormats/CTPPSPixelDigi/interface/SiPixelCalibDigiError.h"
 #include "DataFormats/Common/interface/Wrapper.h"
 #include "DataFormats/Common/interface/DetSetVector.h"
 #include "DataFormats/Common/interface/DetSetVectorNew.h"
