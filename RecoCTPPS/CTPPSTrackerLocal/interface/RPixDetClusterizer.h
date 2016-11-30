@@ -18,6 +18,29 @@
 #include <vector>
 #include <set>
 
+class RPixCalibDigi : public RPixDigi {
+
+public:
+
+RPixCalibDigi(int row, int col, int adc, int ele) : RPixDigi(row,col,adc){
+    electrons_ = ele;
+  }
+
+RPixCalibDigi() : RPixDigi(){}
+
+  int electrons() const {
+    return electrons_;
+  }
+  void set_electrons(int a) {
+    electrons_=a;
+  }
+
+
+  int electrons_;
+
+};
+
+
 class RPixDetClusterizer{
 
 public:
@@ -25,19 +48,21 @@ public:
   RPixDetClusterizer(edm::ParameterSet const& conf);
 
   void buildClusters(unsigned int detId, const std::vector<RPixDigi> &digi, std::vector<RPixCluster> &clusters);
-  void make_cluster(RPixDigi aSeed,  std::vector<RPixCluster> &clusters );
+  void make_cluster(RPixCalibDigi aSeed,  std::vector<RPixCluster> &clusters );
   ~RPixDetClusterizer();
-
+  int calibrate(int,int,int);
 
 private:
 
   std::set<RPixDigi> rpix_digi_set_;
+  std::set<RPixCalibDigi> calib_rpix_digi_set_;
   const edm::ParameterSet &params_;
   int verbosity_;
   unsigned short SeedADCThreshold_;
   unsigned short ADCThreshold_;
+  double ElectronADCGain_;
 
-  std::vector<RPixDigi> SeedVector_;
+  std::vector<RPixCalibDigi> SeedVector_;
 
 };
 

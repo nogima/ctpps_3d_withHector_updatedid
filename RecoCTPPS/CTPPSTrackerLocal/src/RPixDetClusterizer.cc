@@ -11,6 +11,7 @@ RPixDetClusterizer::RPixDetClusterizer(edm::ParameterSet const& conf):
 verbosity_ = conf.getParameter<int>("RPixVerbosity");
 SeedADCThreshold_ = conf.getParameter<int>("SeedADCThreshold");
 ADCThreshold_ = conf.getParameter<int>("ADCThreshold");
+ElectronADCGain_ = conf.getParameter<double>("ElectronADCGain");
 }
 
 RPixDetClusterizer::~RPixDetClusterizer(){}
@@ -23,19 +24,33 @@ if(verbosity_)  for(unsigned int i=0; i<digi.size();i++)std::cout<< digi[i].adc(
 
 
 // creating a set of RPixDigi's and fill it
-
+// NOTE: this should be also the place where SiPixels do the Calibration, i.e. when they create the buffer via make_buffer method!!
  rpix_digi_set_.clear();
  rpix_digi_set_.insert(digi.begin(),digi.end());
 
- if(verbosity_) std::cout<<" RPix set size = "<<rpix_digi_set_.size()<<std::endl;
 
+// try to modify/calibrate digis here
+ calib_rpix_digi_set_.clear();
+ for( std::set<RPixDigi>::iterator RPdit = rpix_digi_set_.begin(); RPdit != rpix_digi_set_.end();++RPdit){
+   int row = (*RPdit).row();
+   int column = (*RPdit).column();
+   int adc = (*RPdit).adc();
+   int electrons = calibrate(adc,row,column);
+//calibrate digi and store the new ones (it still does nothing!!)
+   RPixCalibDigi calibDigi(row,column,adc,electrons);
+   calib_rpix_digi_set_.insert(calibDigi);
+
+
+ }
+ if(verbosity_) std::cout<<" RPix set size = "<<calib_rpix_digi_set_.size()<<std::endl;
 // storing the seeds
  SeedVector_.clear();
- std::set<RPixDigi>::iterator RPDit;
- for(RPDit = rpix_digi_set_.begin(); RPDit!=rpix_digi_set_.end();++RPDit){
-    //   if(verbosity_) std::cout<<"    " << (*RPDit).adc()<< std::endl;
+ std::set<RPixCalibDigi>::iterator RPDit;
+ for(RPDit = calib_rpix_digi_set_.begin(); RPDit!=calib_rpix_digi_set_.end();++RPDit){
+       if(verbosity_) std::cout<<"adc    " << (*RPDit).adc()<< std::endl;
+       if(verbosity_) std::cout<<"ele    " << (*RPDit).electrons()<< std::endl;
 
-   if((*RPDit).adc() > SeedADCThreshold_){
+   if((*RPDit).electrons() > SeedADCThreshold_*ElectronADCGain_){
      
    // storing the seed if above threshold
      SeedVector_.push_back(*RPDit);
@@ -49,11 +64,11 @@ if(verbosity_)  for(unsigned int i=0; i<digi.size();i++)std::cout<< digi[i].adc(
 //----
 // Looping on the seeds to make a cluster around the seed
 
- for(std::vector<RPixDigi>::iterator SeedIt = SeedVector_.begin(); SeedIt!=SeedVector_.end();++SeedIt){
+ for(std::vector<RPixCalibDigi>::iterator SeedIt = SeedVector_.begin(); SeedIt!=SeedVector_.end();++SeedIt){
    
 // testing find method ... to be removed
-   std::set<RPixDigi>::iterator RPDit3 = rpix_digi_set_.find( *SeedIt );
-   if(verbosity_) std::cout<<"    " <<  (*RPDit3).adc()<< std::endl;
+//   std::set<RPixCalibDigi>::iterator RPDit3 = calib_rpix_digi_set_.find( *SeedIt );
+//   if(verbosity_) std::cout<<"    " <<  (*RPDit3).adc()<< std::endl;
 
 // make cluster around the seed
 
@@ -66,7 +81,7 @@ if(verbosity_)  for(unsigned int i=0; i<digi.size();i++)std::cout<< digi[i].adc(
 
 }
 
-void RPixDetClusterizer::make_cluster(RPixDigi aSeed,  std::vector<RPixCluster> &clusters ){
+void RPixDetClusterizer::make_cluster(RPixCalibDigi aSeed,  std::vector<RPixCluster> &clusters ){
 
 // THIS DEPENDS ON SENSOR TOPOLOGY!!!
 
@@ -81,8 +96,8 @@ void RPixDetClusterizer::make_cluster(RPixDigi aSeed,  std::vector<RPixCluster> 
   tempCluster atempCluster;
 
 // filling the cluster with the seed
- atempCluster.addPixel(aSeed.row(),aSeed.column(),aSeed.adc());
-rpix_digi_set_.erase( aSeed );
+ atempCluster.addPixel(aSeed.row(),aSeed.column(),aSeed.electrons());
+calib_rpix_digi_set_.erase( aSeed );
 
 
  while ( ! atempCluster.empty()) {
@@ -92,11 +107,11 @@ rpix_digi_set_.erase( aSeed );
 	 for ( auto r = std::max(0,int(atempCluster.row[curInd])-1); r < std::min(int(atempCluster.row[curInd])+2,max_rows_in_sensor); ++r)  {
 
 //
-	   for(std::set<RPixDigi>::iterator RPDit4 = rpix_digi_set_.begin(); RPDit4 != rpix_digi_set_.end(); ){
-	     if( (*RPDit4).column() == c && (*RPDit4).row() == r && (*RPDit4).adc() > ADCThreshold_ ){
+	   for(std::set<RPixCalibDigi>::iterator RPDit4 = calib_rpix_digi_set_.begin(); RPDit4 != calib_rpix_digi_set_.end(); ){
+	     if( (*RPDit4).column() == c && (*RPDit4).row() == r && (*RPDit4).electrons() > ADCThreshold_*ElectronADCGain_ ){
 	     
-	       if(!atempCluster.addPixel( r,c,(*RPDit4).adc() )) {goto endClus;}
-	       RPDit4 =  rpix_digi_set_.erase(RPDit4);
+	       if(!atempCluster.addPixel( r,c,(*RPDit4).electrons() )) {goto endClus;}
+	       RPDit4 =  calib_rpix_digi_set_.erase(RPDit4);
 
 	     }else{
 	       ++RPDit4;
@@ -118,6 +133,19 @@ rpix_digi_set_.erase( aSeed );
   RPixCluster cluster(atempCluster.isize,atempCluster.adc, atempCluster.row,atempCluster.col, atempCluster.rowmin,atempCluster.colmin);
   clusters.push_back(cluster);
 
-// SPLINTING LARGE CLUSTERS TO BE DONE
+// SPLITTING LARGE CLUSTERS TO BE DONE
+
+}
+
+
+int RPixDetClusterizer::calibrate(int adc, int row, int col){
+
+  const double gain = ElectronADCGain_;
+  const double pedestal = 0;
+//here DB values could be used instead
+
+  int electrons = int(adc*gain + pedestal);
+
+  return electrons;
 
 }

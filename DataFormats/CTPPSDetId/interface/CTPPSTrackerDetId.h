@@ -1,6 +1,11 @@
 #ifndef DataFormats_CTPPSTrackerDetId_h
 #define DataFormats_CTPPSTrackerDetId_h
 
+/*
+Author: F.Ferro INFN Genova
+October 2016
+
+ */
 
 #include <DataFormats/CTPPSDetId/interface/CTPPSDetId.h>
 #include <FWCore/Utilities/interface/Exception.h>
@@ -15,8 +20,7 @@ class CTPPSTrackerDetId :public CTPPSDetId {
       
   // CTPPSTrackerDetId();
 
-  /// Construct from a packed id. It is required that the Detector part of
-  /// id is Totem and the SubDet part is T1, otherwise an exception is thrown.
+  /// Construct from a packed id.
   explicit CTPPSTrackerDetId(uint32_t id);
   
 CTPPSTrackerDetId(const CTPPSDetId &id) : CTPPSDetId(id)
@@ -36,7 +40,7 @@ CTPPSTrackerDetId(const CTPPSDetId &id) : CTPPSDetId(id)
   /// Bits [16:18] Si Plane
 /// 
 
-  /// returns true if the raw ID is a PPS-timing one
+ 
   static bool check(unsigned int raw)
   {
     return (((raw >>DetId::kDetOffset) & 0xF) == DetId::VeryForward &&
@@ -59,28 +63,20 @@ CTPPSTrackerDetId(const CTPPSDetId &id) : CTPPSDetId(id)
     return int((id_>>startPlaneBit) & 0X7);
   }
 
-  int trIndex() const{
-    return trind;
-  }
-
   void set(unsigned int a, unsigned int b, unsigned int c,unsigned int d ){
 //    unsigned int d=0;
     this->init(a,b,c,d);
   }
 
-  // void setLayer(unsigned int a, unsigned int b, unsigned int c, unsigned int d){
-  //  this->init(a,b,c,d);
-  //}
 
   static const int startArmBit = 24;
   static const int startStationBit = 22;
   static const int startRPBit = 19;
   static const int startPlaneBit = 16;
-//  static const int startLayerBit = 16;
  
  private:
   void init(unsigned int Arm, unsigned int Station,unsigned int RP, unsigned int Plane); 
-  int trind;
+
 
 }; // CTPPSTrackerDetId
 

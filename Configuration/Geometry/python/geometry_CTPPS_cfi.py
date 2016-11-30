@@ -64,8 +64,8 @@ XMLIdealGeometryESSource = cms.ESSource("XMLIdealGeometryESSource",
 ),
     rootNodeName = cms.string('cms:CMSE')
 )
-
+XMLIdealGeometryESSource.geomXMLFiles.append("Geometry/VeryForwardData/data/2016_ctpps_15sigma_margin0/RP_Dist_Beam_Cent.xml")
 # real geometry
 TotemRPGeometryESModule = cms.ESProducer("TotemRPGeometryESModule",
-    verbosity = cms.untracked.uint32(1)
+    verbosity = cms.untracked.uint32(3)
 )
