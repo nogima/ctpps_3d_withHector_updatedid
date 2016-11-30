@@ -26,7 +26,16 @@
 #include "DataFormats/CTPPSReco/interface/RPixCluster.h"
 #include "DataFormats/DetId/interface/DetId.h"
 
-#include "RecoCTPPS/CTPPSTrackerLocal/interface/RPixDetClusterizer.h" // to be written !!!!
+#include "RecoCTPPS/CTPPSTrackerLocal/interface/RPixDetClusterizer.h" 
+#include "DataFormats/Common/interface/DetSetVector.h"
+
+#include "DataFormats/CTPPSDetId/interface/CTPPSTrackerDetId.h"
+
+#include "FWCore/Framework/interface/ESWatcher.h"
+#include "Geometry/VeryForwardGeometryBuilder/interface/TotemRPGeometry.h"
+#include "Geometry/VeryForwardRPTopology/interface/RPTopology.h"
+#include "Geometry/Records/interface/VeryForwardRealGeometryRecord.h"
+
 
 #include <vector>
 #include <set>
@@ -50,10 +59,11 @@ private:
  edm::InputTag src_;
  edm::EDGetTokenT<edm::DetSetVector<RPixDigi>> tokenRPixDigi_;
   
- 
-  RPixDetClusterizer clusterizer_;
+ edm::ESWatcher<VeryForwardRealGeometryRecord> geometryWatcher;
 
-  void run(const edm::DetSetVector<RPixDigi> &input, edm::DetSetVector<RPixCluster> &output);
+ RPixDetClusterizer clusterizer_;
+  
+ void run(const edm::DetSetVector<RPixDigi> &input, edm::DetSetVector<RPixCluster> &output);
  
 };
 
