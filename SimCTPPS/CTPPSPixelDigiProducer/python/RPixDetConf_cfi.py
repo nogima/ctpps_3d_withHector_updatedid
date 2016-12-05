@@ -6,7 +6,7 @@ RPixDetDigitizer = cms.EDProducer("CTPPSPixelDigiProducer",
     # RPDigiProducer
     ROUList = cms.vstring('CTPPSPixelHits'),
     RPixVerbosity = cms.int32(0),
-    RPixDigiSimHitRelationsPersistence = cms.bool(False), # save links betweend digi, clusters and OSCAR/Geant4 hits
+    CTPPSPixelDigiSimHitRelationsPersistence = cms.bool(False), # save links betweend digi, clusters and OSCAR/Geant4 hits
 
     # RPDetDigitizer
   RPixEquivalentNoiseCharge = cms.double(1000.0),
@@ -39,7 +39,7 @@ RPixDetDigitizer = cms.EDProducer("CTPPSPixelDigiProducer",
    RPixDeadPixelProbability = cms.double(0.001),
    RPixDeadPixelSimulationOn = cms.bool(False),
 
-    # RPixSimTopology
+    # CTPPSPixelSimTopology
  #   RPSharingSigmas = cms.double(5.0), # how many sigmas taken into account for the edges and inter strips
   #  RPTopEdgeSmearing = cms.double(0.011),
   #  RPBottomEdgeSmearing = cms.double(0.011),

@@ -11,7 +11,7 @@
 #include "boost/cstdint.hpp"
 #include <vector>
 
-namespace DataFormats_RPixDigi {
+namespace DataFormats_CTPPSPixelDigi {
   struct dictionary {
 /*
     SiPixelCalibDigi::datacontainer calibdatacontainer;
@@ -32,14 +32,14 @@ namespace DataFormats_RPixDigi {
     edm::Wrapper<std::vector<edm::DetSet<SiPixelCalibDigiError> > > calibdigierrdetset;
     edm::Wrapper<edm::DetSetVector<SiPixelCalibDigiError> > calibdigierrdetsetvec;
 */
-    edm::Wrapper<RPixDigi> ff0;
-    edm::Wrapper<RPixDigiCollection> ffc0;
-    edm::Wrapper< std::vector<RPixDigi>  > ff1;
-    edm::Wrapper< edm::DetSet<RPixDigi> > ff2;
-    edm::Wrapper< std::vector<edm::DetSet<RPixDigi> > > ff3;
-    edm::Wrapper< edm::DetSetVector<RPixDigi> > ff4;
+    edm::Wrapper<CTPPSPixelDigi> ff0;
+    edm::Wrapper<CTPPSPixelDigiCollection> ffc0;
+    edm::Wrapper< std::vector<CTPPSPixelDigi>  > ff1;
+    edm::Wrapper< edm::DetSet<CTPPSPixelDigi> > ff2;
+    edm::Wrapper< std::vector<edm::DetSet<CTPPSPixelDigi> > > ff3;
+    edm::Wrapper< edm::DetSetVector<CTPPSPixelDigi> > ff4;
 
-    edm::Wrapper<edmNew::DetSetVector<RPixDigi> > ff4_bis;
+    edm::Wrapper<edmNew::DetSetVector<CTPPSPixelDigi> > ff4_bis;
     //   edm::Wrapper<edmNew::DetSetVector<SiPixelCalibDigi> > calibdigidetsetvec_bis;
 //    edm::Wrapper<edmNew::DetSetVector<SiPixelCalibDigiError> > calibdigierrdetsetvec_bis;
     

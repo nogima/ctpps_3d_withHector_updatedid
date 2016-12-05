@@ -47,7 +47,7 @@ CTPPSPixelDigiProducer::CTPPSPixelDigiProducer(const edm::ParameterSet& conf) :
 	//now do what ever other initialization is needed
 	//  std::string strip_digi_label ( conf.getParameter<std::string>("StripDigiLabel") );
 
-	produces<edm::DetSetVector<RPixDigi> > ();
+	produces<edm::DetSetVector<CTPPSPixelDigi> > ();
 //	produces<edm::DetSetVector<RPDetTrigger> > ();
 
 	// register data to consume
@@ -163,7 +163,7 @@ void CTPPSPixelDigiProducer::produce(edm::Event& iEvent, const edm::EventSetup& 
 
 	for (simhit_map_iterator it = SimHitMap.begin(); it != SimHitMap.end(); ++it) { // secondo me qua il loop viene fatto sui rivelatori
 
-		edm::DetSet<RPixDigi> digi_collector(it->first);
+		edm::DetSet<CTPPSPixelDigi> digi_collector(it->first);
 
 		if (theAlgoMap.find(it->first) == theAlgoMap.end()) {
 			theAlgoMap[it->first] = boost::shared_ptr<RPixDetDigitizer>(
@@ -176,7 +176,7 @@ void CTPPSPixelDigiProducer::produce(edm::Event& iEvent, const edm::EventSetup& 
 
 		(theAlgoMap.find(it->first)->second)->run(SimHitMap[it->first], input_links, digi_collector.data,  output_digi_links);  // runno il digitizer
 
-		std::vector<RPixDigi>::iterator pixelIterator = digi_collector.data.begin();
+		std::vector<CTPPSPixelDigi>::iterator pixelIterator = digi_collector.data.begin();
 
 
 		/**
@@ -201,8 +201,8 @@ void CTPPSPixelDigiProducer::produce(edm::Event& iEvent, const edm::EventSetup& 
 	}
 
 	// Step C: create empty output collection
-	std::auto_ptr<edm::DetSetVector<RPixDigi> > digi_output(
-								 new edm::DetSetVector<RPixDigi>(theDigiVector));    // produco la collezione di output
+	std::auto_ptr<edm::DetSetVector<CTPPSPixelDigi> > digi_output(
+								 new edm::DetSetVector<CTPPSPixelDigi>(theDigiVector));    // produco la collezione di output
 
 
 	if (verbosity_) {

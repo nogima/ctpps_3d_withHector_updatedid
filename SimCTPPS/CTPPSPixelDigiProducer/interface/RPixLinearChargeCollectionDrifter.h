@@ -1,5 +1,5 @@
-#ifndef SimCTPPS_RPixDigiProducer_RPix_LINEAR_CHARGE_COLLECTION_DRIFTER_H
-#define SimCTPPS_RPixDigiProducer_RPix_LINEAR_CHARGE_COLLECTION_DRIFTER_H
+#ifndef SimCTPPS_CTPPSPixelDigiProducer_RPix_LINEAR_CHARGE_COLLECTION_DRIFTER_H
+#define SimCTPPS_CTPPSPixelDigiProducer_RPix_LINEAR_CHARGE_COLLECTION_DRIFTER_H
 
 #include <vector>
 #include <iostream>

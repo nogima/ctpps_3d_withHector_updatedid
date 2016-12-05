@@ -44,7 +44,7 @@ process.TotemNtuplizer.includeDigi = cms.bool(True)
 process.TotemNtuplizer.includePatterns = cms.bool(True)
 
 
-process.digiAnal = cms.EDAnalyzer("RPixDigiAnalyzer",
+process.digiAnal = cms.EDAnalyzer("CTPPSPixelDigiAnalyzer",
       label=cms.untracked.string("RPixDetDigitizer"),
      Verbosity = cms.int32(0),
    RPixVerbosity = cms.int32(0),

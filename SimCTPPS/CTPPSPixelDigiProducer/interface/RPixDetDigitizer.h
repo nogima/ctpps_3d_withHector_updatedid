@@ -1,5 +1,5 @@
-#ifndef SimCTPPS_RPixDigiProducer_RPix_DET_DIGITIZER_H
-#define SimCTPPS_RPixDigiProducer_RPix_DET_DIGITIZER_H
+#ifndef SimCTPPS_CTPPSPixelDigiProducer_RPix_DET_DIGITIZER_H
+#define SimCTPPS_CTPPSPixelDigiProducer_RPix_DET_DIGITIZER_H
 
 #include "SimDataFormats/TrackingHit/interface/PSimHit.h"
 #include <vector>
@@ -37,7 +37,7 @@ class RPixDetDigitizer
   public:
     RPixDetDigitizer(const edm::ParameterSet &params, CLHEP::HepRandomEngine& eng, uint32_t det_id, const edm::EventSetup& iSetup);
     void run(const std::vector<PSimHit> &input, const std::vector<int> &input_links, 
-	     std::vector<RPixDigi> &output_digi, //std::vector<RPDetTrigger> &output_trig, 
+	     std::vector<CTPPSPixelDigi> &output_digi, //std::vector<RPDetTrigger> &output_trig, 
         std::vector<std::vector<std::pair<int, double> > >  &output_digi_links
 //,   // for each digi in the output the vector of the number of PSimHit and its weight
 //        SimRP::TriggerPrimaryMapType &output_trig_links

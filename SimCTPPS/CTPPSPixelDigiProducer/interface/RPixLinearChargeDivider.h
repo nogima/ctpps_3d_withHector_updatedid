@@ -1,5 +1,5 @@
-#ifndef SimCTPPS_RPixDigiProducer_LINEAR_CHARGE_DIVIDER_H
-#define SimCTPPS_RPixDigiProducer_LINEAR_CHARGE_DIVIDER_H
+#ifndef SimCTPPS_CTPPSPixelDigiProducer_LINEAR_CHARGE_DIVIDER_H
+#define SimCTPPS_CTPPSPixelDigiProducer_LINEAR_CHARGE_DIVIDER_H
 
 #include "SimDataFormats/TrackingHit/interface/PSimHit.h"
 #include "SimTracker/Common/interface/SiG4UniversalFluctuation.h"
@@ -41,4 +41,4 @@ class RPixLinearChargeDivider
        std::vector<RPixEnergyDepositUnit>  &elossVector);
 };
 
-#endif  //SimTotem_RPixDigiProducer_LINEAR_CHARGE_DIVIDER_H
+#endif  //SimTotem_CTPPSPixelDigiProducer_LINEAR_CHARGE_DIVIDER_H

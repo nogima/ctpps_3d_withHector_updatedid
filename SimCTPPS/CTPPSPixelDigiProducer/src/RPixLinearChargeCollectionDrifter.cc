@@ -1,5 +1,5 @@
 #include "SimCTPPS/CTPPSPixelDigiProducer/interface/RPixLinearChargeCollectionDrifter.h"
-#include "Geometry/CTPPSDetTopology/interface/RPixTopology.h"
+#include "Geometry/VeryForwardGeometry/interface/CTPPSPixelTopology.h"
 #include <iostream>
 #include <vector>
 
@@ -10,7 +10,7 @@ RPixLinearChargeCollectionDrifter::RPixLinearChargeCollectionDrifter
   //charge_cloud_sigma_ = params.getParameter<double>("RPixInterStripSmearing");
   GeV_per_electron_ = params.getParameter<double>("RPixGeVPerElectron");
   charge_cloud_sigmas_vect_ = params.getParameter< std::vector<double> >("RPixInterSmearing");
-  det_thickness_ = RPixTopology().DetThickness();
+  det_thickness_ = CTPPSPixelTopology().DetThickness();
   _det_id=det_id;
 }
 

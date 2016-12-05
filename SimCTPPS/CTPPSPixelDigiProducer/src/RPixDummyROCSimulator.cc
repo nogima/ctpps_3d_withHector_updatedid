@@ -1,5 +1,5 @@
 #include "SimCTPPS/CTPPSPixelDigiProducer/interface/RPixDummyROCSimulator.h"
-#include "Geometry/CTPPSDetTopology/interface/RPixTopology.h"
+#include "Geometry/VeryForwardGeometry/interface/CTPPSPixelTopology.h"
 #include <vector>
 #include "TRandom.h"
 #include <iostream>
@@ -13,9 +13,9 @@ RPixDummyROCSimulator::RPixDummyROCSimulator(const edm::ParameterSet &params, ui
   electron_per_adc_ = params.getParameter<double>("RPixDummyROCElectronPerADC");
   dead_pixel_probability_ = params.getParameter<double>("RPixDeadPixelProbability");
   dead_pixels_simulation_on_ = params.getParameter<bool>("RPixDeadPixelSimulationOn");
-  pixels_no_ = RPixTopology().DetPixelNo();
+  pixels_no_ = CTPPSPixelTopology().DetPixelNo();
   verbosity_ = params.getParameter<int>("RPixVerbosity");
-  links_persistence_ = params.getParameter<bool>("RPixDigiSimHitRelationsPersistence");
+  links_persistence_ = params.getParameter<bool>("CTPPSPixelDigiSimHitRelationsPersistence");
   
   if(dead_pixels_simulation_on_)
     SetDeadPixels();
@@ -42,7 +42,7 @@ RPixDummyROCSimulator::RPixDummyROCSimulator(const edm::ParameterSet &params, ui
 
 void RPixDummyROCSimulator::ConvertChargeToHits(const std::map<unsigned short, double, std::less<unsigned short> > &signals, 
     std::map<unsigned short, std::vector< std::pair<int, double> > > &theSignalProvenance, 
-   std::vector<RPixDigi> &output_digi, 
+   std::vector<CTPPSPixelDigi> &output_digi, 
 //std::vector<RPDetTrigger> &output_trig, 
    std::vector<std::vector<std::pair<int, double> > >  &output_digi_links
 //  ,  SimRP::TriggerPrimaryMapType &output_trig_links
@@ -54,7 +54,7 @@ void RPixDummyROCSimulator::ConvertChargeToHits(const std::map<unsigned short, d
         i!=signals.end(); ++i)
   {
     //one threshold per hybrid
-    unsigned short pixel_no = i->first;   // questo dovrebbe essere il PixelIndex di RPixSimTopology.h (col*160+row)
+    unsigned short pixel_no = i->first;   // questo dovrebbe essere il PixelIndex di CTPPSPixelSimTopology.h (col*160+row)
       if(verbosity_)std::cout << "Dummy ROC adc and threshold : "<< i->second << ", " << threshold_ << std::endl; 
     if(i->second > threshold_ && (!dead_pixels_simulation_on_ 
           || dead_pixels_.find(pixel_no)==dead_pixels_.end() ))
@@ -64,7 +64,7 @@ void RPixDummyROCSimulator::ConvertChargeToHits(const std::map<unsigned short, d
       int row = pixel_no % 160;
       int adc = int(i->second / electron_per_adc_);
 
-      output_digi.push_back(RPixDigi(row,col,adc) );//(det_id_, pixel_no)); /// ?????????????????????????????????????? devo metterci row, col e conteggi adc
+      output_digi.push_back(CTPPSPixelDigi(row,col,adc) );//(det_id_, pixel_no)); /// ?????????????????????????????????????? devo metterci row, col e conteggi adc
       if(links_persistence_)
       {
         output_digi_links.push_back(theSignalProvenance[pixel_no]);

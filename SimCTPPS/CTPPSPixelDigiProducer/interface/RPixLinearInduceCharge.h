@@ -1,10 +1,10 @@
-#ifndef SimPPS_RPixDigiProducer_RPix_LINEAR_INDUCE_CHARGE_H
-#define SimPPS_RPixDigiProducer_RPix_LINEAR_INDUCE_CHARGE_H
+#ifndef SimPPS_CTPPSPixelDigiProducer_RPix_LINEAR_INDUCE_CHARGE_H
+#define SimPPS_CTPPSPixelDigiProducer_RPix_LINEAR_INDUCE_CHARGE_H
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include <vector>
 //#include "SimPPS/PPSTrackerDigiProducer/interface/RPixSimTypes.h"
-#include "Geometry/CTPPSDetTopology/interface/RPixSimTopology.h"
+#include "Geometry/VeryForwardGeometry/interface/CTPPSPixelSimTopology.h"
 #include "SimCTPPS/CTPPSPixelDigiProducer/interface/RPixSignalPoint.h"
 class TFile;
 class TH2D;
@@ -18,7 +18,7 @@ std::map<unsigned short, double, std::less<unsigned short> > Induce(const std::v
     uint32_t det_id_;
     std::vector<double> signalCoupling_;
     std::map<unsigned short, double, std::less<unsigned short> > thePixelChargeMap;
-    RPixSimTopology theRPixDetTopology_;
+    CTPPSPixelSimTopology theRPixDetTopology_;
     double sqrt_2;
     int no_of_pixels_;
     int verbosity_;

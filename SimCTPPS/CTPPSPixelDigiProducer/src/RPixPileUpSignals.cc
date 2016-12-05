@@ -6,7 +6,7 @@
 RPixPileUpSignals::RPixPileUpSignals(const edm::ParameterSet & params, uint32_t det_id)
  : det_id_(det_id)
 {
-  links_persistence_ = params.getParameter<bool>("RPixDigiSimHitRelationsPersistence");
+  links_persistence_ = params.getParameter<bool>("CTPPSPixelDigiSimHitRelationsPersistence");
   verbosity_ = params.getParameter<int>("RPixVerbosity");
 }
 

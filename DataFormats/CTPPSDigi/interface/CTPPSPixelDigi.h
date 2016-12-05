@@ -10,24 +10,24 @@
  * Persistent digi for the Pixels.
  */
 
-class RPixDigi {
+class CTPPSPixelDigi {
 public:
 
   typedef unsigned int PackedDigiType;
   typedef unsigned int ChannelType;
 
-  RPixDigi( int packed_value) : theData(packed_value) {}
+  CTPPSPixelDigi( int packed_value) : theData(packed_value) {}
 
-  RPixDigi( int row, int col, int adc) {
+  CTPPSPixelDigi( int row, int col, int adc) {
     init( row, col, adc);
   }
 
-  RPixDigi( int chan, int adc) {
+  CTPPSPixelDigi( int chan, int adc) {
     std::pair<int,int> rc = channelToPixel(chan);
     init( rc.first, rc.second, adc);
   }
 
-  RPixDigi() : theData(0)  {}
+  CTPPSPixelDigi() : theData(0)  {}
 
   void init( int row, int col, int adc) {
 
@@ -64,16 +64,16 @@ public:
 
 // Comparison operators
 
-//inline bool operator<( const RPixDigi& one, const RPixDigi& other) {
+//inline bool operator<( const CTPPSPixelDigi& one, const CTPPSPixelDigi& other) {
 //  return one.channel() < other.channel();
 //}
 
-inline bool operator<( const RPixDigi& one, const RPixDigi& other) {
+inline bool operator<( const CTPPSPixelDigi& one, const CTPPSPixelDigi& other) {
   return (one.packedData()&RPixPacking::thePacking.rowcol_mask) < (other.packedData()&RPixPacking::thePacking.rowcol_mask);
 }
 
 #include<iostream>
-inline std::ostream & operator<<(std::ostream & o, const RPixDigi& digi) {
+inline std::ostream & operator<<(std::ostream & o, const CTPPSPixelDigi& digi) {
   return o << " " << digi.channel()
 	   << " " << digi.adc();
 }

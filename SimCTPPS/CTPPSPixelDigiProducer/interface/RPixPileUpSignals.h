@@ -1,5 +1,5 @@
-#ifndef SimCTPPS_RPixDigiProducer_RPix_PILE_UP_SIGNALS_H
-#define SimCTPPS_RPixDigiProducer_RPix_PILE_UP_SIGNALS_H
+#ifndef SimCTPPS_CTPPSPixelDigiProducer_RPix_PILE_UP_SIGNALS_H
+#define SimCTPPS_CTPPSPixelDigiProducer_RPix_PILE_UP_SIGNALS_H
 
 #include <map>
 #include "FWCore/ParameterSet/interface/ParameterSet.h"

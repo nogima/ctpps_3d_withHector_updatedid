@@ -18,7 +18,7 @@ class RPixDummyROCSimulator
     RPixDummyROCSimulator(const edm::ParameterSet &params, uint32_t det_id);
     void ConvertChargeToHits(const std::map<unsigned short, double, std::less<unsigned short> > &signals, 
           std::map<unsigned short, std::vector< std::pair<int, double> > >  &theSignalProvenance, 
-          std::vector<RPixDigi> &output_digi, 
+          std::vector<CTPPSPixelDigi> &output_digi, 
 //          std::vector<RPDetTrigger> &output_trig, 
          std::vector<std::vector<std::pair<int, double> > > &output_digi_links 
 //        ,  SimRP::TriggerPrimaryMapType &output_trig_links

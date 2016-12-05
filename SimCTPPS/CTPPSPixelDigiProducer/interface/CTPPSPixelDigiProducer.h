@@ -85,7 +85,7 @@ class CTPPSPixelDigiProducer : public edm::EDProducer {
 
 
 
-      std::vector<edm::DetSet<RPixDigi> > theDigiVector;
+      std::vector<edm::DetSet<CTPPSPixelDigi> > theDigiVector;
 
 
 //      std::vector<edm::DetSet<RPDetTrigger> > theTriggerVector;

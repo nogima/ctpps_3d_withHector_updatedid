@@ -2,7 +2,7 @@
 
 
 #include "RecoCTPPS/CTPPSPixelLocal/interface/RPixDetClusterizer.h"
-#include "Geometry/CTPPSDetTopology/interface/RPixTopology.h"
+#include "Geometry/VeryForwardGeometry/interface/CTPPSPixelTopology.h"
 
 
 RPixDetClusterizer::RPixDetClusterizer(edm::ParameterSet const& conf):
@@ -16,14 +16,14 @@ ElectronADCGain_ = conf.getParameter<double>("ElectronADCGain");
 
 RPixDetClusterizer::~RPixDetClusterizer(){}
 
-void RPixDetClusterizer::buildClusters(unsigned int detId, const std::vector<RPixDigi> &digi, std::vector<RPixCluster> &clusters)
+void RPixDetClusterizer::buildClusters(unsigned int detId, const std::vector<CTPPSPixelDigi> &digi, std::vector<CTPPSPixelCluster> &clusters)
 {
 
  if(verbosity_) std::cout<<" RPixDetClusterizer "<<detId<<" received digi.size()="<<digi.size()<<std::endl;
 if(verbosity_)  for(unsigned int i=0; i<digi.size();i++)std::cout<< digi[i].adc() << std::endl;
 
 
-// creating a set of RPixDigi's and fill it
+// creating a set of CTPPSPixelDigi's and fill it
 // NOTE: this should be also the place where SiPixels do the Calibration, i.e. when they create the buffer via make_buffer method!!
  rpix_digi_set_.clear();
  rpix_digi_set_.insert(digi.begin(),digi.end());
@@ -31,7 +31,7 @@ if(verbosity_)  for(unsigned int i=0; i<digi.size();i++)std::cout<< digi[i].adc(
 
 // try to modify/calibrate digis here
  calib_rpix_digi_set_.clear();
- for( std::set<RPixDigi>::iterator RPdit = rpix_digi_set_.begin(); RPdit != rpix_digi_set_.end();++RPdit){
+ for( std::set<CTPPSPixelDigi>::iterator RPdit = rpix_digi_set_.begin(); RPdit != rpix_digi_set_.end();++RPdit){
    int row = (*RPdit).row();
    int column = (*RPdit).column();
    int adc = (*RPdit).adc();
@@ -81,7 +81,7 @@ if(verbosity_)  for(unsigned int i=0; i<digi.size();i++)std::cout<< digi[i].adc(
 
 }
 
-void RPixDetClusterizer::make_cluster(RPixCalibDigi aSeed,  std::vector<RPixCluster> &clusters ){
+void RPixDetClusterizer::make_cluster(RPixCalibDigi aSeed,  std::vector<CTPPSPixelCluster> &clusters ){
 
 // THIS DEPENDS ON SENSOR TOPOLOGY!!!
 
@@ -130,7 +130,7 @@ calib_rpix_digi_set_.erase( aSeed );
 
 
   if(verbosity_) atempCluster.printCluster();
-  RPixCluster cluster(atempCluster.isize,atempCluster.adc, atempCluster.row,atempCluster.col, atempCluster.rowmin,atempCluster.colmin);
+  CTPPSPixelCluster cluster(atempCluster.isize,atempCluster.adc, atempCluster.row,atempCluster.col, atempCluster.rowmin,atempCluster.colmin);
   clusters.push_back(cluster);
 
 // SPLITTING LARGE CLUSTERS TO BE DONE

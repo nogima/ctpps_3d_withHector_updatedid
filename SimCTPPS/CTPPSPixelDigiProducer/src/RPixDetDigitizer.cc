@@ -3,19 +3,19 @@
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "SimCTPPS/CTPPSPixelDigiProducer/interface/RPixDetDigitizer.h"
-#include "Geometry/CTPPSDetTopology/interface/RPixTopology.h"
+#include "Geometry/VeryForwardGeometry/interface/CTPPSPixelTopology.h"
 
 
 RPixDetDigitizer::RPixDetDigitizer(const edm::ParameterSet &params, CLHEP::HepRandomEngine& eng, uint32_t det_id, const edm::EventSetup& iSetup)
   : params_(params), det_id_(det_id)
 {
   verbosity_ = params.getParameter<int>("RPixVerbosity");
-  numPixels = RPixTopology().DetPixelNo();
+  numPixels = CTPPSPixelTopology().DetPixelNo();
   theNoiseInElectrons = params.getParameter<double>("RPixEquivalentNoiseCharge");
   thePixelThresholdInE = params.getParameter<double>("RPixDummyROCThreshold");
   noNoise = params.getParameter<bool>("RPixNoNoise");
 //  misalignment_simulation_on_ = params_.getParameter<bool>("RPDisplacementOn");
-  _links_persistence = params.getParameter<bool>("RPixDigiSimHitRelationsPersistence");
+  _links_persistence = params.getParameter<bool>("CTPPSPixelDigiSimHitRelationsPersistence");
 
 // theRPGaussianTailNoiseAdder = new RPGaussianTailNoiseAdder(numStrips,  theNoiseInElectrons, theStripThresholdInE, verbosity_);
   theRPixPileUpSignals = new RPixPileUpSignals(params_, det_id_);
@@ -34,7 +34,7 @@ RPixDetDigitizer::~RPixDetDigitizer()
 }
 
 void RPixDetDigitizer::run(const std::vector<PSimHit> &input, const std::vector<int> &input_links, 
-			   std::vector<RPixDigi> &output_digi, //std::vector<RPDetTrigger> &output_trig, 
+			   std::vector<CTPPSPixelDigi> &output_digi, //std::vector<RPDetTrigger> &output_trig, 
     std::vector<std::vector<std::pair<int, double> > >  &output_digi_links
 //    ,SimRP::TriggerPrimaryMapType &output_trig_links
 )

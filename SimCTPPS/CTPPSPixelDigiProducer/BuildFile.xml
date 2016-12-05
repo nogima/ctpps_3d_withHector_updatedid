@@ -6,7 +6,7 @@
 <use   name="DataFormats/CTPPSDigi"/>
 <use   name="SimDataFormats/CrossingFrame"/>
 <use   name="SimTracker/Common"/>
-<use   name="Geometry/CTPPSDetTopology"/>
+<use   name="Geometry/VeryForwardGeometry"/>
 <use   name="Geometry/VeryForwardGeometryBuilder"/>
 <use   name="clhep"/>
 <use   name="Mixing/Base"/>

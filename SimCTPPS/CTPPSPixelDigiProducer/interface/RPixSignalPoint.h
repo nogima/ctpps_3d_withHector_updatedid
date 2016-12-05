@@ -1,5 +1,5 @@
-#ifndef SimCTPPS_RPixDigiProducer_RPix_SignalPoint_H
-#define SimCTPPS_RPixDigiProducer_RPix_SignalPoint_H
+#ifndef SimCTPPS_CTPPSPixelDigiProducer_RPix_SignalPoint_H
+#define SimCTPPS_CTPPSPixelDigiProducer_RPix_SignalPoint_H
 
 
 #include "DataFormats/GeometryVector/interface/LocalPoint.h"
@@ -31,4 +31,4 @@ class RPixSignalPoint {
     double charge_;
 };
 
-#endif  //SimCTPPS_RPixDigiProducer_RPix_SignalPoint_H
+#endif  //SimCTPPS_CTPPSPixelDigiProducer_RPix_SignalPoint_H

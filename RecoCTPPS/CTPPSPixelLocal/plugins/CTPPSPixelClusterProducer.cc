@@ -30,9 +30,9 @@ CTPPSPixelClusterProducer::CTPPSPixelClusterProducer(const edm::ParameterSet& co
   src_ = conf.getUntrackedParameter<std::string>("label");
   verbosity_ = conf.getParameter<int> ("RPixVerbosity");
 	 
-  tokenRPixDigi_ = consumes<edm::DetSetVector<RPixDigi> >(edm::InputTag(src_));
+  tokenCTPPSPixelDigi_ = consumes<edm::DetSetVector<CTPPSPixelDigi> >(edm::InputTag(src_));
  
-  produces<edm::DetSetVector<RPixCluster> > ();
+  produces<edm::DetSetVector<CTPPSPixelCluster> > ();
 }
 
 CTPPSPixelClusterProducer::~CTPPSPixelClusterProducer() {
@@ -46,8 +46,8 @@ void CTPPSPixelClusterProducer::produce(edm::Event& iEvent, const edm::EventSetu
  
 // Step A: get inputs
 
-	edm::Handle<edm::DetSetVector<RPixDigi> > rpd;
-	iEvent.getByToken(tokenRPixDigi_, rpd);
+	edm::Handle<edm::DetSetVector<CTPPSPixelDigi> > rpd;
+	iEvent.getByToken(tokenCTPPSPixelDigi_, rpd);
 
  // get geometry
  //----------------------------------
@@ -73,7 +73,7 @@ void CTPPSPixelClusterProducer::produce(edm::Event& iEvent, const edm::EventSetu
       //     theClusterVector.reserve(400);
       //    theClusterVector.clear();
 
-	edm::DetSetVector<RPixCluster>  output;
+	edm::DetSetVector<CTPPSPixelCluster>  output;
 
 // run clusterisation
 	if (rpd->size())
@@ -84,7 +84,7 @@ void CTPPSPixelClusterProducer::produce(edm::Event& iEvent, const edm::EventSetu
 	int numberOfClusters = 0;
   
       // Iterate on detector units
-	edm::DetSetVector<RPixDigi>::const_iterator DSViter = rpd->begin();
+	edm::DetSetVector<CTPPSPixelDigi>::const_iterator DSViter = rpd->begin();
 	for( ; DSViter != rpd->end(); DSViter++) {
 	  ++numberOfDetUnits;
  
@@ -93,7 +93,7 @@ void CTPPSPixelClusterProducer::produce(edm::Event& iEvent, const edm::EventSetu
        
 
 
-	    edmNew::DetSetVector<RPixCluster>::FastFiller spc(output, DSViter->detId());
+	    edmNew::DetSetVector<CTPPSPixelCluster>::FastFiller spc(output, DSViter->detId());
 
 	 
 	    clusterizer_->clusterizeDetUnit(*DSViter, spc);  //CHECK HOW TO DEAL WITH DEADCHANNELS AND GEOMETRY
@@ -103,21 +103,21 @@ void CTPPSPixelClusterProducer::produce(edm::Event& iEvent, const edm::EventSetu
 */
         // Step D: write output to file
        
-	iEvent.put(std::make_unique<edm::DetSetVector<RPixCluster> >(output));
+	iEvent.put(std::make_unique<edm::DetSetVector<CTPPSPixelCluster> >(output));
 
 }
 
-void CTPPSPixelClusterProducer::run(const edm::DetSetVector<RPixDigi> &input, edm::DetSetVector<RPixCluster> &output){
+void CTPPSPixelClusterProducer::run(const edm::DetSetVector<CTPPSPixelDigi> &input, edm::DetSetVector<CTPPSPixelCluster> &output){
 
   for (const auto &ds_digi : input)
     {
-      edm::DetSet<RPixCluster> &ds_cluster = output.find_or_insert(ds_digi.id);
+      edm::DetSet<CTPPSPixelCluster> &ds_cluster = output.find_or_insert(ds_digi.id);
  
       clusterizer_.buildClusters(ds_digi.id, ds_digi.data, ds_cluster.data);
 
 //-----------------------------------
       unsigned int cluN=0;
-      for(std::vector<RPixCluster>::iterator iit = ds_cluster.data.begin(); iit != ds_cluster.data.end(); iit++){
+      for(std::vector<CTPPSPixelCluster>::iterator iit = ds_cluster.data.begin(); iit != ds_cluster.data.end(); iit++){
 	
 	if(verbosity_)	std::cout << "Cluster " << ++cluN <<" avg row " << (*iit).avg_row()<< " avg col " << (*iit).avg_col()<<std::endl;
 

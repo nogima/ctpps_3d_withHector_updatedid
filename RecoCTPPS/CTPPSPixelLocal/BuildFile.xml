@@ -10,7 +10,7 @@
  
 <use name="Geometry/CTPPSDetGeometryBuilder"/>
 -->
-<use name="Geometry/CTPPSDetTopology"/>
+<use name="Geometry/VeryForwardGeometry"/>
 
 <use name="root"/>
  

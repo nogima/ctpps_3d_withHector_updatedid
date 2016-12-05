@@ -4,8 +4,8 @@
  * September 2016
  *
  **********************************************************************/
-#ifndef RecoCTPPS_RPixCluster_DET_CLUSTERIZER_H
-#define RecoCTPPS_RPixCluster_DET_CLUSTERIZER_H
+#ifndef RecoCTPPS_CTPPSPixelCluster_DET_CLUSTERIZER_H
+#define RecoCTPPS_CTPPSPixelCluster_DET_CLUSTERIZER_H
 
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 
@@ -13,20 +13,20 @@
 
 #include "DataFormats/CTPPSDigi/interface/CTPPSPixelDigi.h"
 #include "DataFormats/CTPPSDigi/interface/CTPPSPixelDigiCollection.h"
-#include "DataFormats/CTPPSReco/interface/RPixCluster.h"
+#include "DataFormats/CTPPSReco/interface/CTPPSPixelCluster.h"
 
 #include <vector>
 #include <set>
 
-class RPixCalibDigi : public RPixDigi {
+class RPixCalibDigi : public CTPPSPixelDigi {
 
 public:
 
-RPixCalibDigi(int row, int col, int adc, int ele) : RPixDigi(row,col,adc){
+RPixCalibDigi(int row, int col, int adc, int ele) : CTPPSPixelDigi(row,col,adc){
     electrons_ = ele;
   }
 
-RPixCalibDigi() : RPixDigi(){}
+RPixCalibDigi() : CTPPSPixelDigi(){}
 
   int electrons() const {
     return electrons_;
@@ -47,14 +47,14 @@ public:
 
   RPixDetClusterizer(edm::ParameterSet const& conf);
 
-  void buildClusters(unsigned int detId, const std::vector<RPixDigi> &digi, std::vector<RPixCluster> &clusters);
-  void make_cluster(RPixCalibDigi aSeed,  std::vector<RPixCluster> &clusters );
+  void buildClusters(unsigned int detId, const std::vector<CTPPSPixelDigi> &digi, std::vector<CTPPSPixelCluster> &clusters);
+  void make_cluster(RPixCalibDigi aSeed,  std::vector<CTPPSPixelCluster> &clusters );
   ~RPixDetClusterizer();
   int calibrate(int,int,int);
 
 private:
 
-  std::set<RPixDigi> rpix_digi_set_;
+  std::set<CTPPSPixelDigi> rpix_digi_set_;
   std::set<RPixCalibDigi> calib_rpix_digi_set_;
   const edm::ParameterSet &params_;
   int verbosity_;

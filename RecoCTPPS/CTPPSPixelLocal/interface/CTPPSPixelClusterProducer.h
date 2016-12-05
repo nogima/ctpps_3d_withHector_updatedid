@@ -23,7 +23,7 @@
 #include "FWCore/Utilities/interface/InputTag.h"
 
 #include "DataFormats/CTPPSDigi/interface/CTPPSPixelDigi.h"
-#include "DataFormats/CTPPSReco/interface/RPixCluster.h"
+#include "DataFormats/CTPPSReco/interface/CTPPSPixelCluster.h"
 #include "DataFormats/DetId/interface/DetId.h"
 
 #include "RecoCTPPS/CTPPSPixelLocal/interface/RPixDetClusterizer.h" 
@@ -57,13 +57,13 @@ private:
  int verbosity_;
  
  edm::InputTag src_;
- edm::EDGetTokenT<edm::DetSetVector<RPixDigi>> tokenRPixDigi_;
+ edm::EDGetTokenT<edm::DetSetVector<CTPPSPixelDigi>> tokenCTPPSPixelDigi_;
   
  edm::ESWatcher<VeryForwardRealGeometryRecord> geometryWatcher;
 
  RPixDetClusterizer clusterizer_;
   
- void run(const edm::DetSetVector<RPixDigi> &input, edm::DetSetVector<RPixCluster> &output);
+ void run(const edm::DetSetVector<CTPPSPixelDigi> &input, edm::DetSetVector<CTPPSPixelCluster> &output);
  
 };
 

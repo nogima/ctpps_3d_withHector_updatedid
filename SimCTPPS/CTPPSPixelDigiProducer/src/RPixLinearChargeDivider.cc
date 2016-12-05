@@ -1,8 +1,8 @@
 #include "SimCTPPS/CTPPSPixelDigiProducer/interface/RPixLinearChargeDivider.h"
-#include "Geometry/CTPPSDetTopology/interface/RPixHepPDTWrapper.h"
+#include "Geometry/VeryForwardGeometry/interface/RPixHepPDTWrapper.h"
 #include "DataFormats/GeometryVector/interface/LocalPoint.h"
 #include "DataFormats/GeometryVector/interface/LocalVector.h"
-#include "Geometry/CTPPSDetTopology/interface/RPixTopology.h"
+#include "Geometry/VeryForwardGeometry/interface/CTPPSPixelTopology.h"
 
 RPixLinearChargeDivider::RPixLinearChargeDivider(const edm::ParameterSet &params,  CLHEP::HepRandomEngine& eng,
     uint32_t det_id) : params_(params), rndEngine(eng) , _det_id(det_id)
