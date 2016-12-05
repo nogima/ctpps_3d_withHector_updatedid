@@ -1,5 +1,5 @@
-#ifndef Geometry_CTPPSPixelDetTopology_RPix_DET_TOPOLOGY_H
-#define Geometry_CTPPSPixelDetTopology_RPix_DET_TOPOLOGY_H
+#ifndef Geometry_Veryforwardgeometry_RPix_DET_TOPOLOGY_H
+#define Geometry_Veryforwardgeometry_RPix_DET_TOPOLOGY_H
 
 #include "TMath.h"
 #include "DataFormats/GeometryVector/interface/LocalVector.h"
@@ -16,11 +16,11 @@ namespace HepMC {
  *\brief Geometrical and topological information on RPix silicon detector.
  * Uses coordinate a frame with origin in the center of the wafer.
  **/
-class RPixTopology
+class CTPPSPixelTopology
 {
   public:
-    RPixTopology();
-    ~RPixTopology();
+    CTPPSPixelTopology();
+    ~CTPPSPixelTopology();
 
 
  

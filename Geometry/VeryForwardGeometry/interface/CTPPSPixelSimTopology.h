@@ -4,7 +4,7 @@
 #include "TMath.h"
 #include "FWCore/ParameterSet/interface/ParameterSet.h"
 #include "DataFormats/GeometryVector/interface/LocalVector.h"
-#include "Geometry/CTPPSDetTopology/interface/RPixTopology.h"
+#include "Geometry/VeryForwardGeometry/interface/CTPPSPixelTopology.h"
 
 /* simX and simY are the coordinates as in the simulation: 
    _______
@@ -53,10 +53,10 @@ private:
   unsigned short pixel_index_;
 };
 
-class RPixSimTopology : public RPixTopology
+class CTPPSPixelSimTopology : public CTPPSPixelTopology
 {
 public:
-  RPixSimTopology(const edm::ParameterSet &params);
+  CTPPSPixelSimTopology(const edm::ParameterSet &params);
   std::vector<pixel_info> GetPixelsInvolved(double x, double y, double sigma, double &hit_pos_x, double &hit_pos_y);
   inline void PixelRange(unsigned int row, unsigned int col, double &lower_x, double &higher_x, double &lower_y, double &higher_y){
        

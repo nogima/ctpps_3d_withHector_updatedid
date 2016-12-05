@@ -1,4 +1,4 @@
-#ifndef Geometry_PixDetTopology_RPix_HEPPDT_WRAPPER_H
+#ifndef Geometry_RPixDetTopology_RPix_HEPPDT_WRAPPER_H
 #define Geometry_RPixDetTopology_RPix_HEPPDT_WRAPPER_H
 
 #include <fstream>

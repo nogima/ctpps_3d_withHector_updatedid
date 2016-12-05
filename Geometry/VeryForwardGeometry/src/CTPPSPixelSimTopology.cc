@@ -1,7 +1,7 @@
-#include "Geometry/CTPPSDetTopology/interface/RPixSimTopology.h"
+#include "Geometry/VeryForwardGeometry/interface/CTPPSPixelSimTopology.h"
 #include <iostream>
 
-RPixSimTopology::RPixSimTopology(const edm::ParameterSet &params)
+CTPPSPixelSimTopology::CTPPSPixelSimTopology(const edm::ParameterSet &params)
 {
   verbosity_ = params.getParameter<int>("RPixVerbosity");
 
@@ -16,7 +16,7 @@ RPixSimTopology::RPixSimTopology(const edm::ParameterSet &params)
 
 }
 
-std::vector<pixel_info> RPixSimTopology::GetPixelsInvolved(double x, double y, double sigma, double &hit_pos_x, double &hit_pos_y)
+std::vector<pixel_info> CTPPSPixelSimTopology::GetPixelsInvolved(double x, double y, double sigma, double &hit_pos_x, double &hit_pos_y)
 {
   theRelevantPixels_.clear();
 //hit position wrt the bottom left corner of the sensor (-8.3, -12.2) in sensor view, rocs behind

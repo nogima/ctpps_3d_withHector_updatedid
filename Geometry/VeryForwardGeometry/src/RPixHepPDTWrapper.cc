@@ -1,4 +1,4 @@
-#include "Geometry/CTPPSDetTopology/interface/RPixHepPDTWrapper.h"
+#include "Geometry/VeryForwardGeometry/interface/RPixHepPDTWrapper.h"
 
 HepPDT::ParticleDataTable *RPixHepPDTWrapper::datacol = NULL;
 
