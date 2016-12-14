@@ -199,18 +199,32 @@ void CTPPSPixelDigiProducer::produce(edm::Event& iEvent, const edm::EventSetup& 
 		}
 
 	}
+//----------------
 
-	// Step C: create empty output collection
-	std::auto_ptr<edm::DetSetVector<CTPPSPixelDigi> > digi_output(
-								 new edm::DetSetVector<CTPPSPixelDigi>(theDigiVector));    // produco la collezione di output
-
+	std::unique_ptr<edm::DetSetVector<CTPPSPixelDigi> > digi_output(
+								      new edm::DetSetVector<CTPPSPixelDigi>(theDigiVector));    
 
 	if (verbosity_) {
 		std::cout << "digi_output->size()=" << digi_output->size() << std::endl;
 
 	}
 	// Step D: write output to file
-	iEvent.put(digi_output);
+
+	iEvent.put(std::move(digi_output));
+
+
+//----------------------
+	// Step C: create empty output collection
+/*	std::auto_ptr<edm::DetSetVector<CTPPSPixelDigi> > digi_output(
+								      new edm::DetSetVector<CTPPSPixelDigi>(theDigiVector));    
+
+	if (verbosity_) {
+		std::cout << "digi_output->size()=" << digi_output->size() << std::endl;
+
+	}
+*/	// Step D: write output to file
+
+//	iEvent.put(std::make_unique<edm::DetSetVector<CTPPSPixelDigi>>(theDigiVector),"RPixDetDigitizer");
 
 }
 
