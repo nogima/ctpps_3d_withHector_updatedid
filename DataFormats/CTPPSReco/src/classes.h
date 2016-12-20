@@ -8,6 +8,7 @@
 #include "DataFormats/CTPPSReco/interface/TotemRPLocalTrack.h"
 
 #include "DataFormats/CTPPSReco/interface/CTPPSPixelCluster.h"
+#include "DataFormats/CTPPSReco/interface/CTPPSPixelRecHit.h"
 
 #include <vector>
 
@@ -44,6 +45,14 @@ namespace {
     std::vector<edm::DetSet<CTPPSPixelCluster> > svdsrpcl;
     edm::DetSetVector<CTPPSPixelCluster> dsvrpcl;
     edm::Wrapper<edm::DetSetVector<CTPPSPixelCluster> > wdsvrpcl;
+
+    CTPPSPixelRecHit rprh;
+    edm::DetSet<CTPPSPixelRecHit> dsrprh;
+    std::vector<CTPPSPixelRecHit> svrprh;
+    std::vector<edm::DetSet<CTPPSPixelRecHit> > svdsrprh;
+    edm::DetSetVector<CTPPSPixelRecHit> dsvrprh;
+    edm::Wrapper<edm::DetSetVector<CTPPSPixelRecHit> > wdsvrprh;
+
 
 
   }
