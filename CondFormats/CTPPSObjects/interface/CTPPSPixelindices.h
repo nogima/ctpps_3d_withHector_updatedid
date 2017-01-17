@@ -32,7 +32,7 @@ namespace {
   // Default ROC size 
   const int ROCSizeInX = 80;  // ROC row size in pixels 
   const int ROCSizeInY = 52;  // ROC col size in pixels 
-  // Default DET barrel size 
+  // Default DET size 
   const int defaultDetSizeInX = 160;  // Det row size in pixels (2 ROCs) 
   const int defaultDetSizeInY = 156; //  Det col size in pixels (3 ROCs) // 416 for Det barrel col size in pixels 
   
@@ -202,6 +202,42 @@ class CTPPSPixelIndices {
 
       return 0;
   }
+ 
+// get ROC ID from module row and column
+ 
+  int getROCId(const int col,const int row) const {
+
+    int rocId = -1;
+
+      if(CTPPS_CHECK_LIMITS) {
+	if(col<0 || col>=(ROCSizeInY*theChipsInY) || row<0 || 
+			     row>=(ROCSizeInX*theChipsInX)) {
+	  std::cout<<"CTPPSPixelIndices: wrong index 3 "<<std::endl;
+	  return -1;
+	}
+      }
+
+      // Get the 2d ROC coordinate
+      int chipX = row / ROCSizeInX; // row index of the chip 0-1
+      int chipY = col / ROCSizeInY; // col index of the chip 0-2  (7 for barrel)
+
+      // Get the ROC id from the 2D index
+      rocId = rocIndex(chipX,chipY); 
+      if(CTPPS_CHECK_LIMITS && (rocId<0 || rocId>=6) ) {
+	std::cout<<"CTPPSPixelIndices: wrong roc index "<<rocId<<std::endl;
+	return -1;
+      }
+ 
+      return rocId;
+  }
+
+// is pixel on the edge?
+  bool isOnEdge(const int col, const int row) const {
+    if(col == 0 || row == 0 || col == (defaultDetSizeInY-1) || row == (defaultDetSizeInX-1) return true;
+       return false;
+  }
+
+
   //***********************************************************************
   // Calculate a single number ROC index from the 2 ROC indices (coordinates)
   // chipX and chipY.
@@ -259,6 +295,9 @@ class CTPPSPixelIndices {
     return std::pair<int,int>(rowROC,colROC);
   }
   
+ inline int getDefaultRowDetSize() const { return defaultDetSizeInX;}
+ inline int getDefaultColDetSize() const { return defaultDetSizeInY;}
+
 
   //***********************************************************************
  private:

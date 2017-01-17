@@ -6,8 +6,8 @@
 *
 */
 
-#ifndef DataFormats_CTPPSReco_CTPPSPixelRecHit
-#define DataFormats_CTPPSReco_CTPPSPixelRecHit
+#ifndef DataFormats_CTPPSReco_CTPPSPixelRecHit_H
+#define DataFormats_CTPPSReco_CTPPSPixelRecHit_H
 
 
 #include "DataFormats/GeometrySurface/interface/LocalError.h"
@@ -20,16 +20,26 @@ class CTPPSPixelRecHit{
 public:
 
   CTPPSPixelRecHit(){}
-CTPPSPixelRecHit(LocalPoint lp, LocalError le) : thePoint(lp), theError(le), isOnEdge_(false),hasBadPixels_(false), spanTwoRocs_(false){;}
-CTPPSPixelRecHit(LocalPoint lp, LocalError le, bool edge, bool bad, bool rocs) : thePoint(lp), theError(le), isOnEdge_(edge),hasBadPixels_(bad), spanTwoRocs_(rocs){;}
+CTPPSPixelRecHit(LocalPoint lp, LocalError le) : thePoint(lp), theError(le), isOnEdge_(false),hasBadPixels_(false), spanTwoRocs_(false), minPixelRow_(-1), minPixelCol_(-1), clusterSize_(0), clusterSizeRow_(0), clusterSizeCol_(0){;}
+CTPPSPixelRecHit(LocalPoint lp, LocalError le, bool edge, bool bad, bool rocs) : thePoint(lp), theError(le), isOnEdge_(edge),hasBadPixels_(bad), spanTwoRocs_(rocs),  minPixelRow_(-1), minPixelCol_(-1), clusterSize_(0), clusterSizeRow_(0), clusterSizeCol_(0){;}
+CTPPSPixelRecHit(LocalPoint lp, LocalError le, bool edge, bool bad, bool rocs, int minrow, int mincol, int size, int rowsize, int colsize) : thePoint(lp), theError(le), isOnEdge_(edge),hasBadPixels_(bad), spanTwoRocs_(rocs),  minPixelRow_(minrow), minPixelCol_(mincol), clusterSize_(size), clusterSizeRow_(rowsize), clusterSizeCol_(colsize){;}
 
   
-  inline LocalPoint getPoint(){ return thePoint;}
-  inline LocalError getError(){ return theError;}
+  inline LocalPoint getPoint() const { return thePoint;}
+  inline LocalError getError() const { return theError;}
   
-  inline bool isOnEdge(){return isOnEdge_;}
-  inline bool hasBadPixels(){return hasBadPixels_;}
-  inline bool spanTwoRocs(){return spanTwoRocs_;}
+  inline bool isOnEdge() const {return isOnEdge_;}
+  inline bool hasBadPixels() const {return hasBadPixels_;}
+  inline bool spanTwoRocs() const {return spanTwoRocs_;}
+
+  
+  inline int minPixelRow() const { return minPixelRow_;}
+  inline int minPixelCol() const { return minPixelCol_;}
+ 
+  inline int clusterSize() const { return clusterSize_;}
+  inline int clusterSizeRow() const { return clusterSizeRow_;}
+  inline int clusterSizeCol() const { return clusterSizeCol_;}
+
 
 
 private:
@@ -40,6 +50,13 @@ private:
   bool isOnEdge_;
   bool hasBadPixels_;
   bool spanTwoRocs_;
+
+  int minPixelRow_;
+  int minPixelCol_;
+
+  int clusterSize_;
+  int clusterSizeRow_;
+  int clusterSizeCol_;
 
 };
 

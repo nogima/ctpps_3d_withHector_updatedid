@@ -51,7 +51,7 @@ void CTPPSPixelClusterProducer::produce(edm::Event& iEvent, const edm::EventSetu
 
  // get geometry
  //----------------------------------
-
+/*
 	edm::ESHandle<TotemRPGeometry> geometry;
 	iSetup.get<VeryForwardMeasuredGeometryRecord>().get(geometry);
 
@@ -66,7 +66,7 @@ void CTPPSPixelClusterProducer::produce(edm::Event& iEvent, const edm::EventSetu
 
 //	std::cout << " z0 = " << z0 <<std::endl;
 	std::cout << "id: "<< rpId <<"   local " << localV <<"   to global "<<globalV<< std::endl;
-
+*/
 //---------------------------------------------
 
 
@@ -79,28 +79,7 @@ void CTPPSPixelClusterProducer::produce(edm::Event& iEvent, const edm::EventSetu
 	if (rpd->size())
 	  run(*rpd, output);
 
-/*
-	int numberOfDetUnits = 0;
-	int numberOfClusters = 0;
-  
-      // Iterate on detector units
-	edm::DetSetVector<CTPPSPixelDigi>::const_iterator DSViter = rpd->begin();
-	for( ; DSViter != rpd->end(); DSViter++) {
-	  ++numberOfDetUnits;
- 
-	  std::vector<short> badChannels; 
-	  DetId detIdObject(DSViter->detId());
-       
 
-
-	    edmNew::DetSetVector<CTPPSPixelCluster>::FastFiller spc(output, DSViter->detId());
-
-	 
-	    clusterizer_->clusterizeDetUnit(*DSViter, spc);  //CHECK HOW TO DEAL WITH DEADCHANNELS AND GEOMETRY
-
-	} // end of DetUnit loop
-     
-*/
         // Step D: write output to file
        
 	iEvent.put(std::make_unique<edm::DetSetVector<CTPPSPixelCluster> >(output));

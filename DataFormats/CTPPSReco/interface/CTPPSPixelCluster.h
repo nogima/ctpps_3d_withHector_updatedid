@@ -92,6 +92,20 @@ CTPPSPixelCluster(unsigned int isize, uint16_t * adcs,
   int colSpan() const {return thePixelColSpan; }
   int rowSpan() const { return thePixelRowSpan; }
 
+
+  const std::vector<uint8_t> & pixelOffset() const { return thePixelOffset;}
+  const std::vector<uint16_t> & pixelADC() const { return thePixelADC;}
+
+  uint16_t pixelRow(int i) const {
+    return minPixelRow() + thePixelOffset[i*2];
+  }
+  uint16_t pixelCol(int i) const {
+    return minPixelCol() + thePixelOffset[i*2+1];
+  }
+  uint16_t pixelADC(int i) const {
+    return thePixelADC[i]
+  }
+  
 private:
 
   std::vector<uint8_t>  thePixelOffset;

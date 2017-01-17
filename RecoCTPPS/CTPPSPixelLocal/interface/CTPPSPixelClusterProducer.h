@@ -59,7 +59,7 @@ private:
  edm::InputTag src_;
  edm::EDGetTokenT<edm::DetSetVector<CTPPSPixelDigi>> tokenCTPPSPixelDigi_;
   
- edm::ESWatcher<VeryForwardRealGeometryRecord> geometryWatcher;
+// edm::ESWatcher<VeryForwardRealGeometryRecord> geometryWatcher;
 
  RPixDetClusterizer clusterizer_;
   
