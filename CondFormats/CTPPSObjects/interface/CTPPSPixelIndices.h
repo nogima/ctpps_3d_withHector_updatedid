@@ -46,6 +46,21 @@ class CTPPSPixelIndices {
   
   //*********************************************************************
   // Constructor with the ROC size fixed to the default.
+   CTPPSPixelIndices() : 
+                theColsInDet(defaultDetSizeInY), theRowsInDet (defaultDetSizeInX) {
+ 
+    theChipsInX = theRowsInDet / ROCSizeInX; // number of ROCs in X
+    theChipsInY = theColsInDet / ROCSizeInY;    // number of ROCs in Y
+
+    if(CTPPS_CHECK_LIMITS) {
+      if(theChipsInX<1 || theChipsInX>maxROCsInX) 
+	std::cout << " CTPPSPixelIndices: Error in ROCsInX " 
+	     << theChipsInX <<" "<<theRowsInDet<<" "<<ROCSizeInX<<std::endl;
+      if(theChipsInY<1 || theChipsInY>maxROCsInY) 
+	std::cout << " CTPPSPixelIndices: Error in ROCsInY " 
+	     << theChipsInY <<" "<<theColsInDet<<" "<<ROCSizeInY<<std::endl;
+    }
+  } 
    CTPPSPixelIndices(const int colsInDet,  const int rowsInDet ) : 
                 theColsInDet(colsInDet), theRowsInDet (rowsInDet) {
  
