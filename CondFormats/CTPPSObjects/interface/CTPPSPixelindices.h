@@ -233,7 +233,7 @@ class CTPPSPixelIndices {
 
 // is pixel on the edge?
   bool isOnEdge(const int col, const int row) const {
-    if(col == 0 || row == 0 || col == (defaultDetSizeInY-1) || row == (defaultDetSizeInX-1) return true;
+    if(col == 0 || row == 0 || col == (defaultDetSizeInY-1) || row == (defaultDetSizeInX-1)) return true;
        return false;
   }
 

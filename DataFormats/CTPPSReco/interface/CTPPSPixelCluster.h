@@ -103,7 +103,7 @@ CTPPSPixelCluster(unsigned int isize, uint16_t * adcs,
     return minPixelCol() + thePixelOffset[i*2+1];
   }
   uint16_t pixelADC(int i) const {
-    return thePixelADC[i]
+    return thePixelADC[i];
   }
   
 private:
