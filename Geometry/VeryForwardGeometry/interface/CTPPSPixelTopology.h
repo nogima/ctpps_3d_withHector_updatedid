@@ -5,7 +5,7 @@
 #include "DataFormats/GeometryVector/interface/LocalVector.h"
 #include "DataFormats/Common/interface/Ref.h"
 #include "SimDataFormats/GeneratorProducts/interface/HepMCProduct.h"
-#include "CondFormats/CTPPSObjects/interface/CTPPSPixelIndices.h"
+#include "CondFormats/CTPPSReadoutObjects/interface/CTPPSPixelIndices.h"
 
 using namespace std; 
 namespace HepMC {
