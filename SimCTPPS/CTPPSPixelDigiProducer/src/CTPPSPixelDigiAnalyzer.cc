@@ -72,7 +72,7 @@ CTPPSPixelDigiAnalyzer:: CTPPSPixelDigiAnalyzer(const ParameterSet& pset) : theR
 
   psim_token = consumes<PSimHitContainer>( edm::InputTag("g4SimHits","CTPPSPixelHits") );
 // psim_token = consumes<CrossingFrame<PSimHit>>(edm::InputTag("mix"));
-  pixel_token = consumes<edm::DetSetVector<CTPPSPixelDigi>>( edm::InputTag(label) ); //label=RPixDetDigitizer???
+  pixel_token = consumes<edm::DetSetVector<CTPPSPixelDigi>>( edm::InputTag(label,"") ); //label=RPixDetDigitizer???
 
  
 }
@@ -120,7 +120,7 @@ void  CTPPSPixelDigiAnalyzer::analyze(const Event & event, const EventSetup& eve
   if(verbosity_>0)cout << "--- Run: " << event.id().run()
        << " Event: " << event.id().event() << endl;
   
-  
+  cout << "                                                            I do love Pixels     " << endl;  
   Handle<PSimHitContainer> simHits; 
   event.getByToken(psim_token,simHits);    
 

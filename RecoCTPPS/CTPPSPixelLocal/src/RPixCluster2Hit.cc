@@ -67,7 +67,7 @@ void RPixCluster2Hit::make_hit(CTPPSPixelCluster aCluster,  std::vector<CTPPSPix
   bool anEdgePixel = false;
   if(aCluster.minPixelRow() == 0 || aCluster.minPixelCol() == 0 ||  (aCluster.minPixelRow()+aCluster.rowSpan()) == (pxlInd.getDefaultRowDetSize()-1) ||    (aCluster.minPixelCol()+aCluster.colSpan()) == (pxlInd.getDefaultColDetSize()-1) ) anEdgePixel = true;
 
-// check for bad (ADC=0) pixels in cluster  // CHECK IF IT IS TRUE IN CLUSTERIZER !!!!!!!!!!!!!!!!!!!!!
+// check for bad (ADC=0) pixels in cluster  // CHECK IF IT IS TRUE IN CLUSTERIZER !!!!!!!!!!!!!!!!!!!!! the dead/noisy pixels are set with adc=0 in the calibration. 
   bool aBadPixel = false;
   for(int i = 0; i < thisClusterSize; i++){
     if(aCluster.pixelADC(i)==0) aBadPixel = true;
