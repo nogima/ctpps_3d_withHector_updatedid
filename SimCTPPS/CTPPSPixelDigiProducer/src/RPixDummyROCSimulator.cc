@@ -62,7 +62,7 @@ void RPixDummyROCSimulator::ConvertChargeToHits(const std::map<unsigned short, d
 
       int col = pixel_no / 160;
       int row = pixel_no % 160;
-      int adc = int(i->second / electron_per_adc_);
+      int adc = int(i->second / electron_per_adc_ + 0.5);
 
 /// set maximum for 8 bits adc
       if (adc >=255) adc=255;

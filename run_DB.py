@@ -141,9 +141,11 @@ process.clusterProd = cms.EDProducer("CTPPSPixelClusterProducer",
                                      RPixVerbosity = cms.int32(1),
                                      SeedADCThreshold = cms.int32(50),
                                      ADCThreshold = cms.int32(10),
-				     ElectronADCGain = cms.double(135.0),
+#				     ElectronADCGain = cms.double(135.0),
+                                     ElectronADCGain = cms.double(210.0), # Same value as RPixDummyROCElectronPerADC
                                      VCaltoElectronOffset = cms.int32(-414),
                                      VCaltoElectronGain = cms.int32(65),
+                                     doSingleCalibration = cms.bool(True),
 )
 
 process.g4Simhits_step = cms.Path(process.g4SimHits)

@@ -20,6 +20,7 @@ ADCThreshold_ = conf.getParameter<int>("ADCThreshold");
 ElectronADCGain_ = conf.getParameter<double>("ElectronADCGain");
 VcaltoElectronGain_ = conf.getParameter<int>("VCaltoElectronGain");
 VcaltoElectronOffset_ = conf.getParameter<int>("VCaltoElectronOffset");
+doSingleCalibration_ = conf.getParameter<bool>("doSingleCalibration");
 }
 
 RPixDetClusterizer::~RPixDetClusterizer(){}
@@ -164,21 +165,26 @@ int RPixDetClusterizer::calibrate(unsigned int detId, int adc, int row, int col,
   bool isdead_p=false;
   float gain=0;
   float pedestal=0;
+  float electrons=0;
 // double -> float
 
-  detId = 2014314496; //just one plane on test DB file 
+  detId = 2014314496; //just one plane in test DB file 
 
-  CTPPSPixelGainCalibration DetCalibs = pcalibrations->getGainCalibration(detId);
-  gain = DetCalibs.getGain(col,row,isdead_g,isnoisy_g);
-  pedestal = DetCalibs.getPed(col,row,isdead_p,isnoisy_p);
- 
-  float vcal = (adc - pedestal)*gain;
-  int electrons = int(vcal*VcaltoElectronGain_ + VcaltoElectronOffset_);
- 
-cout << "calibrate:  adc = " << adc << " electrons = " << electrons << " gain = " << gain << " pedestal = " << pedestal << endl;
-
+  if(!doSingleCalibration_){
+    CTPPSPixelGainCalibration DetCalibs = pcalibrations->getGainCalibration(detId);
+    gain = DetCalibs.getGain(col,row,isdead_g,isnoisy_g);
+    pedestal = DetCalibs.getPed(col,row,isdead_p,isnoisy_p);
+    float vcal = (adc - pedestal)*gain;
+    electrons = int(vcal*VcaltoElectronGain_ + VcaltoElectronOffset_);
+    if(verbosity_) std::cout << "calibrate:  adc = " << adc << " electrons = " << electrons << " gain = " << gain << " pedestal = " << pedestal << endl;
+  }else{
+    gain = ElectronADCGain_;
+    pedestal = 0;
+    electrons = int(adc*gain-pedestal);
+    if(verbosity_) std::cout << "calibrate:  adc = " << adc << " electrons = " << electrons << " ElectronADCGain = " << gain << " pedestal = " << pedestal << endl;
+  }
   if (electrons<0) {
-    if(verbosity_) cout << "*** electrons < 0 *** --> " << electrons << "  --> electrons = 0" << endl;
+    std::cout << "RPixDetClusterizer::calibrate: *** electrons < 0 *** --> " << electrons << "  --> electrons = 0" << endl;
     electrons = 0;
   }
   return electrons;
