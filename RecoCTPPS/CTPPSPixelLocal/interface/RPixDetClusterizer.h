@@ -66,6 +66,7 @@ private:
   double ElectronADCGain_;
   int VcaltoElectronGain_;
   int VcaltoElectronOffset_;
+  bool doSingleCalibration_;
   std::string CalibrationFile_;
   std::vector<RPixCalibDigi> SeedVector_;
   

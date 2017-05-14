@@ -20,6 +20,7 @@ ADCThreshold_ = conf.getParameter<int>("ADCThreshold");
 ElectronADCGain_ = conf.getParameter<double>("ElectronADCGain");
 VcaltoElectronGain_ = conf.getParameter<int>("VCaltoElectronGain");
 VcaltoElectronOffset_ = conf.getParameter<int>("VCaltoElectronOffset");
+doSingleCalibration_ = conf.getParameter<bool>("doSingleCalibration");
 CalibrationFile_ = conf.getParameter<string>("CalibrationFile");
 theDAQcalibration =  new CTPPSPixelDAQCalibration(conf);
 theDAQcalibration->setDAQCalibrationFile(CalibrationFile_);
@@ -148,7 +149,6 @@ void RPixDetClusterizer::make_cluster(RPixCalibDigi aSeed,  std::vector<CTPPSPix
  endClus:
 //  SiPixelCluster cluster(atempCluster.isize,atempCluster.adc, atempCluster.x,atempCluster.y, atempCluster.xmin,atempCluster.ymin);
 
-
   if(verbosity_) atempCluster.printCluster();
   CTPPSPixelCluster cluster(atempCluster.isize,atempCluster.adc, atempCluster.row,atempCluster.col, atempCluster.rowmin,atempCluster.colmin);
   clusters.push_back(cluster);
@@ -163,17 +163,23 @@ int RPixDetClusterizer::calibrate(unsigned int detId, int adc, int row, int col)
 
   float gain=0;
   float pedestal=0;
+  int electrons=0;
 // double -> float
 
-  theDAQcalibration->getDAQCalibration(detId,row,col,gain,pedestal);
-
-  float vcal = adc*gain - pedestal;
-  int electrons = int(vcal*VcaltoElectronGain_ + VcaltoElectronOffset_);
-
- cout << "calibrate:  adc = " << adc << " electrons = " << electrons << " gain = " << gain << " pedestal = " << pedestal << endl;
+  if(!doSingleCalibration_){
+    theDAQcalibration->getDAQCalibration(detId,row,col,gain,pedestal);
+    float vcal = adc*gain - pedestal;
+    electrons = int(vcal*VcaltoElectronGain_ + VcaltoElectronOffset_);
+    if(verbosity_) std::cout << "calibrate:  adc = " << adc << " electrons = " << electrons << " gain = " << gain << " pedestal = " << pedestal << endl;
+  }else{
+    gain = ElectronADCGain_;
+    pedestal = 0;
+    electrons = int(adc*gain-pedestal); 
+    if(verbosity_) std::cout << "calibrate:  adc = " << adc << " electrons = " << electrons << " ElectronADCGain = " << gain << " pedestal = " << pedestal << endl;
+  }
 
   if (electrons<0) {
-    if(verbosity_) cout << "*** electrons < 0 *** --> " << electrons << "  --> electrons = 0" << endl;
+    std::cout << "RPixDetClusterizer::calibrate: *** electrons < 0 *** --> " << electrons << "  --> electrons = 0" << endl;
     electrons = 0; 
   }
   return electrons;
