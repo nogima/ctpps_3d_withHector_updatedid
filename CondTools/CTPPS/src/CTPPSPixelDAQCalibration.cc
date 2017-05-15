@@ -69,8 +69,12 @@ void CTPPSPixelDAQCalibration::getDAQCalibration(unsigned int detid, int row, in
 
     return;
   }
-
- gain = 1/float(gainshisto->GetBinContent(colROC+1,rowROC+1));
+ float slope = float(gainshisto->GetBinContent(colROC+1,rowROC+1));
+ if (slope==0.){
+  gain = 0.;
+ }else{
+  gain = 1./slope;
+ }
  pedestal = float(pedestalshisto->GetBinContent(colROC+1,rowROC+1));
 
  }else{
