@@ -168,7 +168,7 @@ int RPixDetClusterizer::calibrate(unsigned int detId, int adc, int row, int col)
 
   if(!doSingleCalibration_){
     theDAQcalibration->getDAQCalibration(detId,row,col,gain,pedestal);
-    float vcal = adc*gain - pedestal;
+    float vcal = gain*(adc - pedestal);
     electrons = int(vcal*VcaltoElectronGain_ + VcaltoElectronOffset_);
     if(verbosity_) std::cout << "calibrate:  adc = " << adc << " electrons = " << electrons << " gain = " << gain << " pedestal = " << pedestal << endl;
   }else{
